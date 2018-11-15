@@ -44,6 +44,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="MathParser.org-mXparser, Version=4.2.0.0, Culture=neutral, PublicKeyToken=0fbab7add73ed6e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathParser.org-mXparser.4.2.2\lib\net461\MathParser.org-mXparser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -78,59 +81,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="org\mariuszgromada\math\mxparser\Argument.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\Constant.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\Expression.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\Function.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\FunctionExtension.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\FunctionExtensionVariadic.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\AstronomicalConstants.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\BinaryRelations.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\BooleanAlgebra.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\Calculus.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\Coefficients.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\Evaluate.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\MathConstants.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\MathFunctions.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\NumberTheory.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\PhysicalConstants.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\PrimesCache.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\ProbabilityDistributions.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\SpecialFunctions.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\Statistics.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mathcollection\Units.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\Miscellaneous.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\mXparser.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\BinaryRelation.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\BitwiseOperator.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\BooleanOperator.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\CalculusOperator.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\ConstantValue.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Function1Arg.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Function2Arg.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Function3Arg.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\FunctionVariadic.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\KeyWord.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Operator.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\ParserSymbol.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\RandomVariable.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Token.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\parsertokens\Unit.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\PrimitiveElement.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\RecursiveArgument.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\regressiontesting\PerformanceTests.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\regressiontesting\RegTestExpression.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\regressiontesting\RegTestExpressionAPI.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\regressiontesting\RegTestSyntax.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\regressiontesting\RunTest.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\ParseException.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\SimpleCharStream.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\SyntaxChecker.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\SyntaxCheckerConstants.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\SyntaxCheckerTokenManager.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\Token.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\syntaxchecker\TokenMgrError.cs" />
-    <Compile Include="org\mariuszgromada\math\mxparser\Tutorial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,9 +98,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="org\mariuszgromada\math\mxparser\regressiontesting\PerformanceTests.cs.old" />
-    <None Include="org\mariuszgromada\math\mxparser\syntaxchecker\generate-SyntaxChecker.bat" />
-    <None Include="org\mariuszgromada\math\mxparser\syntaxchecker\SyntaxChecker.jj" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -159,9 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="org\mariuszgromada\math\mxparser\syntaxchecker\csjavacc.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
