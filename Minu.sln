@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minu", "WpfApp1\Minu.csproj", "{9EB62070-CF3F-4515-8423-8DE98E6D04B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minu", "Minu\Minu.csproj", "{9EB62070-CF3F-4515-8423-8DE98E6D04B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

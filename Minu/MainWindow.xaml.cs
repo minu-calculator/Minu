@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using org.mariuszgromada.math.mxparser;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
-namespace WpfApp1
+namespace Minu
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
