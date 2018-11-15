@@ -11,9 +11,16 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
         WindowStyle="None"
+        ResizeMode="CanResize"
         AllowsTransparency="True"
-        ResizeMode="NoResize"
-        Background="Transparent">
+        Background="Transparent"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="10" />
+    </WindowChrome.WindowChrome>
 
     <Grid>
         <Border Background="Transparent" Visibility="{Binding Visibility}" Margin="10">
@@ -23,6 +30,7 @@
                 </Border.BitmapEffect>
                 <Grid>
                     <Grid Height="25" VerticalAlignment="Top" Margin="0 5 0 0" Loaded="titleLoaded">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Minu" FontSize="16" FontFamily="Consolas" Foreground="#757575"/>
                         <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 10 0" Click="btnClose"  BorderBrush="Azure" >
                             <Button.Template >
                                 <ControlTemplate TargetType="Button" >
@@ -68,7 +76,7 @@
                             <ColumnDefinition Width="5*" />
                             <ColumnDefinition Width="4*" />
                         </Grid.ColumnDefinitions>
-                        <RichTextBox Background="Transparent" BorderThickness="0" Name="input" Grid.Column="0" Padding="32 32 0 0" FontSize="16" CaretBrush="#dde1e4" Foreground="#dde1e4" FontFamily="Consolas" TextChanged="textChangedEventHandler">
+                        <RichTextBox Background="Transparent" BorderThickness="0" Name="input" Grid.Column="0" Padding="32 16 0 0" FontSize="16" CaretBrush="#dde1e4" Foreground="#dde1e4" FontFamily="Consolas" TextChanged="textChangedEventHandler">
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">
                                     <Setter Property="Margin" Value="0"/>
@@ -85,7 +93,7 @@
                                 </Style>
                             </RichTextBox.Resources>
                         </RichTextBox>
-                        <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="32" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
+                        <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="32 16 32 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
                     </Grid>
                 </Grid>
             </Border>
