@@ -25,16 +25,33 @@ namespace Minu {
         }
 
         private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
-            output.Text = "";
-
+            string outputText = "";
             string rawInput = (new TextRange(input.Document.ContentStart, input.Document.ContentEnd)).Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
+            var arguments = new List<Argument>();
             foreach (string input in inputs) {
-                if (input != "")
-                    output.Text += new Expression(input).calculate();
                 output.Text += "\n";
+                if (input == "") continue;
+                if (input.Contains("=")) { // variables
+                    bool overrided = false;
+                    Argument arg = new Argument(input);
+                    arg.addArguments(arguments.ToArray());
+                    if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
+                        overrided = true;
+                    arguments.Add(arg);
+                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " + arg.getArgumentValue() + "\n";
+                }
+                else { // evaluate
+                    var expression = new Expression(input);
+                    expression.addArguments(arguments.ToArray());
+                    var result = expression.calculate();
+                    if(!double.IsNaN(result))
+                        outputText += result + "\n";
+                }
             }
+
+            output.Text = outputText;
         }
 
         private void titleLoaded(object sender, RoutedEventArgs args) {
