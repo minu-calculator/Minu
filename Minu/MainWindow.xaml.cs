@@ -37,5 +37,22 @@ namespace Minu {
             }
         }
 
+        private void titleLoaded(object sender, RoutedEventArgs args) {
+            this.MouseDown += delegate { DragMove(); };
+        }
+
+        private void btnClose(object sender, RoutedEventArgs e) {
+            Close();
+        }
+
+        private void btnRest(object sender, RoutedEventArgs e) {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else WindowState = WindowState.Maximized;
+        }
+   
+        private void btnMini(object sender, RoutedEventArgs e) {
+            WindowState = WindowState.Minimized;
+        }
     }
 }
