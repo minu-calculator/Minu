@@ -6,8 +6,6 @@
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
@@ -15,8 +13,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-        Background="Transparent"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        Background="Transparent">
 
     <Grid>
         <Border Background="Transparent" Visibility="{Binding Visibility}" Margin="10">
