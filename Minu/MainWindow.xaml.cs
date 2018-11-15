@@ -29,9 +29,17 @@ namespace Minu
 
         private void textChangedEventHandler(object sender, TextChangedEventArgs args)
         {
-            TextRange textRange = new TextRange(input.Document.ContentStart, input.Document.ContentEnd);
-            Expression e = new Expression(textRange.Text);
-            output.Text = e.calculate() + "\n";
+            output.Text = "";
+
+            string rawInput = (new TextRange(input.Document.ContentStart, input.Document.ContentEnd)).Text;
+            string[] inputs = rawInput.Replace("\r", "").Split('\n');
+
+            foreach (string input in inputs)
+            {
+                if (input != "")
+                    output.Text += new Expression(input).calculate();
+                output.Text += "\n";
+            }
         }
 
     }
