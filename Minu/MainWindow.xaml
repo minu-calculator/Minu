@@ -13,12 +13,19 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
         WindowStyle="None"
+        ResizeMode="CanResize"
         AllowsTransparency="True"
-        ResizeMode="NoResize"
         Background="Transparent"
         FontFamily="{DynamicResource MaterialDesignFont}">
 
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="10" />
+    </WindowChrome.WindowChrome>
+
     <Grid>
+        
         <Border Background="Transparent" Visibility="{Binding Visibility}" Margin="10">
             <Border BorderBrush="#191a1d" BorderThickness="1" Background="#191a1d" CornerRadius="10">
                 <Border.BitmapEffect>
