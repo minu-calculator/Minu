@@ -101,6 +101,8 @@ namespace Minu {
 
             var arguments = new List<Argument>();
             var functions = new List<Function>();
+            double ans = 0.0;
+
             foreach (string input in inputs) {
                 if (input.StartsWith("#")) { // comments + settings
                     string trimed = input.Substring(1).TrimStart().ToLower();
@@ -121,7 +123,7 @@ namespace Minu {
                 }
                 else if (input.Contains("=")) { // variables
                     bool overrided = false;
-                    Argument arg = new Argument(input);
+                    Argument arg = new Argument(input, new Argument("ans", ans));
                     arg.addArguments(arguments.ToArray());
                     arg.addFunctions(functions.ToArray());
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
@@ -131,12 +133,14 @@ namespace Minu {
                         formattedOutput(arg.getArgumentValue(), outputMode);
                 }
                 else if (input != "") { // evaluate
-                    var expression = new Expression(input);
+                    var expression = new Expression(input, new Argument("ans", ans));
                     expression.addArguments(arguments.ToArray());
                     expression.addFunctions(functions.ToArray());
                     var result = expression.calculate();
-                    if (!double.IsNaN(result))
+                    if (!double.IsNaN(result)) {
+                        ans = result;
                         outputText += formattedOutput(result, outputMode);
+                    }
                 }
                 outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
             }
