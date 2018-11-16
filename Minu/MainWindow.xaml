@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500"
+        Title="Minu" Height="500" Width="500"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
@@ -14,8 +14,8 @@
         ResizeMode="CanResize"
         AllowsTransparency="True"
         Background="Transparent"
-        SizeChanged="Window_SizeChanged"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="Consolas"
+        SizeChanged="Window_SizeChanged">
 
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -30,7 +30,7 @@
                     <DropShadowBitmapEffect Color="Black" Opacity="0.5" Direction="270" ShadowDepth="0.7" />
                 </Border.BitmapEffect>
                 <Grid>
-                    <Grid Height="25" VerticalAlignment="Top" Margin="0 5 0 0" Loaded="titleLoaded">
+                    <Grid Height="25" VerticalAlignment="Top" Margin="0 5 0 0">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Minu" FontSize="16" FontFamily="Consolas" Foreground="#757575"/>
                         <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 10 0" Click="btnClose"  BorderBrush="Azure" >
                             <Button.Template >
@@ -72,30 +72,32 @@
                             </Button.Template>
                         </Button>
                     </Grid>
-                    <Grid Margin="5 40 5 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="4*" />
-                        </Grid.ColumnDefinitions>
-                        <RichTextBox Background="Transparent" BorderThickness="0" Name="input" Grid.Column="0" Padding="32 16 0 0" FontSize="16" CaretBrush="#dde1e4" Foreground="#dde1e4" FontFamily="Consolas" TextChanged="textChangedEventHandler">
-                            <RichTextBox.Resources>
-                                <Style TargetType="{x:Type Paragraph}">
-                                    <Setter Property="Margin" Value="0"/>
-                                </Style>
-                                <Style TargetType="RichTextBox">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="IBeam" />
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter Property="Cursor" Value="Arrow" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </RichTextBox.Resources>
-                        </RichTextBox>
-                        <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="32 16 32 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
-                    </Grid>
+                    <ScrollViewer Margin="38 56 16 40">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <RichTextBox Background="Transparent" BorderThickness="0" Name="input" Grid.Column="0" FontSize="16" CaretBrush="#dde1e4" Foreground="#dde1e4" FontFamily="Consolas" TextChanged="textChangedEventHandler">
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="RichTextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Cursor" Value="IBeam" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter Property="Cursor" Value="Arrow" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </RichTextBox.Resources>
+                            </RichTextBox>
+                            <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="16 0 10 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
+                        </Grid>
+                    </ScrollViewer>
                 </Grid>
             </Border>
         </Border>

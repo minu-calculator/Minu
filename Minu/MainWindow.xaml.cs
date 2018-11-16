@@ -140,8 +140,12 @@ namespace Minu {
                 }
                 outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
             }
+            output.Text = outputText.TrimEnd('\n');
+        }
 
-            output.Text = outputText;
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
+            base.OnMouseLeftButtonDown(e);
+            this.DragMove();
         }
 
         private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
