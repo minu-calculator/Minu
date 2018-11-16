@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,7 @@ namespace Minu {
         }
 
         private int characterPerLine = -1;
+        private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
         private int getWrappedLine(RichTextBox rtb) {
             TextPointer caretLineStart = rtb.CaretPosition.GetLineStartPosition(0);
@@ -82,11 +84,22 @@ namespace Minu {
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
             var arguments = new List<Argument>();
+            var functions = new List<Function>();
             foreach (string input in inputs) {
-                if (input.Contains("=")) { // variables
+                if (functionRegex.IsMatch(input)) { // functions
+                    bool overrided = false;
+                    Function func = new Function(input);
+                    func.addFunctions(functions.ToArray());
+                    if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
+                        overrided = true;
+                    functions.Add(func);
+                    outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+                }
+                else if (input.Contains("=")) { // variables
                     bool overrided = false;
                     Argument arg = new Argument(input);
                     arg.addArguments(arguments.ToArray());
+                    arg.addFunctions(functions.ToArray());
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
                         overrided = true;
                     arguments.Add(arg);
@@ -95,11 +108,12 @@ namespace Minu {
                 else if (input != "") { // evaluate
                     var expression = new Expression(input);
                     expression.addArguments(arguments.ToArray());
+                    expression.addFunctions(functions.ToArray());
                     var result = expression.calculate();
                     if (!double.IsNaN(result))
                         outputText += result;
                 }
-                outputText += new string('\n', (int)Math.Ceiling((double)input.Length / characterPerLine));
+                outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
             }
 
             output.Text = outputText;
