@@ -17,9 +17,10 @@
 			</RuleSet>
 		</Span>
 		
-		<Keywords fontWeight="bold" foreground="Blue">
+		<Keywords fontWeight="bold" foreground="Yellow">
 			<Word>if</Word>
-			<Word>else</Word>
+      <Word>else</Word>
+      <Word>fuck</Word>
 			<!-- ... -->
 		</Keywords>
 		
@@ -28,7 +29,7 @@
 		</Keywords>
 		
 		<!-- Digits -->
-		<Rule foreground="DarkBlue">
+		<Rule foreground="#60b8eb">
             \b0[xX][0-9a-fA-F]+  # hex number
         |    \b
             (    \d+(\.[0-9]+)?   #number with optional floating point

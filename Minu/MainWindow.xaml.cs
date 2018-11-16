@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using org.mariuszgromada.math.mxparser;
@@ -118,16 +109,15 @@ namespace Minu {
                 outputText += new string('\n', inputActualLine);
             }
             output.Text = outputText.TrimEnd('\n');
-            showSplitterIfNecessary(inputOverflowed);
+            
+            bool outputOverflowed = (outputColumn.ActualWidth - output.ActualWidth - output.Margin.Left - output.Margin.Right) <= 10;
+            if (outputOverflowed || inputOverflowed)
+                splitter.Visibility = Visibility.Visible;
+            else
+                splitter.Visibility = Visibility.Collapsed;
         }
 
         private void showSplitterIfNecessary(bool inputOverflowed) {
-            double outDifference = outputColumn.ActualWidth - output.ActualWidth - output.Margin.Left - output.Margin.Right;
-            bool outOverflowed = outDifference <= 10;
-            
-            if (outOverflowed || inputOverflowed)
-                splitter.Visibility = Visibility.Visible;
-            else splitter.Visibility = Visibility.Collapsed;
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
             base.OnMouseLeftButtonDown(e);

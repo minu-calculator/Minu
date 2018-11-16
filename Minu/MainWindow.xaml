@@ -18,18 +18,20 @@
         Loaded="Window_Loaded"
         AllowsTransparency="True"
         SizeChanged="Window_SizeChanged">
-
     <WindowChrome.WindowChrome>
         <WindowChrome 
-        CaptionHeight="0"
-        ResizeBorderThickness="10" />
+            CaptionHeight="0"
+            ResizeBorderThickness="10" />
     </WindowChrome.WindowChrome>
-
     <Grid>
         <Border Background="Transparent" Visibility="{Binding Visibility}" Margin="10">
-            <Border BorderBrush="#191a1d" BorderThickness="1" Background="#191a1d" CornerRadius="10">
+            <Border 
+                BorderBrush="#191a1d" BorderThickness="1" 
+                Background="#191a1d" CornerRadius="10">
                 <Border.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Opacity="0.5" Direction="270" ShadowDepth="0.7" />
+                    <DropShadowBitmapEffect 
+                        Color="Black" Opacity="0.5" 
+                        Direction="270" ShadowDepth="0.7" />
                 </Border.BitmapEffect>
                 <Grid>
                     <local:TitleBar/>
@@ -46,10 +48,16 @@
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True"
                                 TextChanged="textChangedEventHandler"/>
-                            <GridSplitter Name="splitter" Grid.Column="1" Width="6"
-                                         Padding="2" HorizontalAlignment="Center" Background="#303030" BorderThickness="2" Visibility="Collapsed">
+                            <GridSplitter 
+                                Name="splitter" Grid.Column="1" Width="6"
+                                Padding="2" HorizontalAlignment="Center" 
+                                Background="#303030" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
-                            <TextBlock Grid.Column="2" Name="output" FontSize="16" Margin="3 0 10 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" HorizontalAlignment="Right"></TextBlock>
+                            <TextBlock 
+                                Grid.Column="2" Name="output" FontSize="16" 
+                                Margin="3 0 10 0" FontFamily="Consolas" 
+                                Foreground="#82cc0f" TextAlignment="Right" 
+                                TextWrapping="NoWrap" HorizontalAlignment="Right"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

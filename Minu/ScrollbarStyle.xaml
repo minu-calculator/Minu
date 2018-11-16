@@ -43,7 +43,6 @@
             Value="Transparent" />
         <Setter Property="Width"
             Value="7" />
-        <Setter Property="Foreground" Value="#303030" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
