@@ -30,48 +30,7 @@
                     <DropShadowBitmapEffect Color="Black" Opacity="0.5" Direction="270" ShadowDepth="0.7" />
                 </Border.BitmapEffect>
                 <Grid>
-                    <Grid Height="25" VerticalAlignment="Top" Margin="0 5 0 0">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Minu" FontSize="16" FontFamily="Consolas" Foreground="#757575"/>
-                        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 10 0" Click="btnClose"  BorderBrush="Azure" >
-                            <Button.Template >
-                                <ControlTemplate TargetType="Button" >
-                                    <Grid >
-                                        <Path Stretch="Uniform" UseLayoutRounding="False" Fill="#e64a19">
-                                            <Path.Data>
-                                                <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                                            </Path.Data>
-                                        </Path>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 35 0" Click="btnRest"  BorderBrush="Azure" >
-                            <Button.Template >
-                                <ControlTemplate TargetType="Button" >
-                                    <Grid >
-                                        <Path Stretch="Uniform" UseLayoutRounding="False" Fill="#00c853">
-                                            <Path.Data>
-                                                <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                                            </Path.Data>
-                                        </Path>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 60 0" Click="btnMini"  BorderBrush="Azure" >
-                            <Button.Template >
-                                <ControlTemplate TargetType="Button" >
-                                    <Grid >
-                                        <Path Stretch="Uniform" UseLayoutRounding="False" Fill="#fbc02d">
-                                            <Path.Data>
-                                                <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                                            </Path.Data>
-                                        </Path>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </Grid>
+                    <local:TitleBar/>
                     <ScrollViewer Margin="38 56 16 40">
                         <Grid Name="container">
                             <Grid.ColumnDefinitions>

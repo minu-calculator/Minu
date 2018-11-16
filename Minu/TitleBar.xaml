@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Minu.TitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Minu"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="TitleButton" TargetType="Button" >
+            <Grid>
+                <Path Stretch="Uniform" UseLayoutRounding="False" Fill="{TemplateBinding Background}">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                    </Path.Data>
+                </Path>
+            </Grid>
+        </ControlTemplate>
+        <Style x:Key="closeButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#50e64a19" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="#FFe64a19" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="restButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5000c853" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="#FF00c853" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="miniButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#50fbc02d" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="#FFfbc02d" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Height="25" VerticalAlignment="Top" Margin="0 5 0 0">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Minu" FontSize="16" FontFamily="Consolas" Foreground="#757575"/>
+        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 10 0" Click="btnClose"  BorderBrush="Azure" Template="{StaticResource TitleButton}" Style="{StaticResource closeButton}"/>
+        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 35 0" Click="btnRest"  BorderBrush="Azure" Template="{StaticResource TitleButton}" Style="{StaticResource restButton}"/>
+        <Button Height="13" HorizontalAlignment="right" VerticalAlignment="Center" Margin="0 0 60 0" Click="btnMini"  BorderBrush="Azure" Template="{StaticResource TitleButton}" Style="{StaticResource miniButton}"/>
+    </Grid>
+</UserControl>

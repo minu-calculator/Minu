@@ -170,24 +170,6 @@ namespace Minu {
         private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
             recalculate();
         }
-
-        private void titleLoaded(object sender, RoutedEventArgs args) {
-            MouseDown += delegate { DragMove(); };
-        }
-
-        private void btnClose(object sender, RoutedEventArgs e) {
-            Close();
-        }
-
-        private void btnRest(object sender, RoutedEventArgs e) {
-            if (WindowState == WindowState.Maximized)
-                WindowState = WindowState.Normal;
-            else WindowState = WindowState.Maximized;
-        }
-   
-        private void btnMini(object sender, RoutedEventArgs e) {
-            WindowState = WindowState.Minimized;
-        }
        
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
             characterPerLine = -1;
