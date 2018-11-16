@@ -14,6 +14,7 @@
         ResizeMode="CanResize"
         AllowsTransparency="True"
         Background="Transparent"
+        SizeChanged="Window_SizeChanged"
         FontFamily="{DynamicResource MaterialDesignFont}">
 
     <WindowChrome.WindowChrome>

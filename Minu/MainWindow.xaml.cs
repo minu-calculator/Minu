@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,15 +25,64 @@ namespace Minu {
             InitializeComponent();
         }
 
-        private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
+        private int characterPerLine = -1;
+
+        private int getWrappedLine(RichTextBox rtb) {
+            TextPointer caretLineStart = rtb.CaretPosition.GetLineStartPosition(0);
+            TextPointer p = rtb.Document.ContentStart.GetLineStartPosition(0);
+            int caretLineNumber = 1;
+
+            while (true) {
+                if (caretLineStart.CompareTo(p) < 0) {
+                    break;
+                }
+
+                int result;
+                p = p.GetLineStartPosition(1, out result);
+
+                if (result == 0) {
+                    break;
+                }
+
+                caretLineNumber++;
+            }
+            return caretLineNumber;
+        }
+
+        private int getCharacterPerLine(RichTextBox rtb) {
+            // Save the content for future restoring.
+            MemoryStream memoryStream = new MemoryStream();
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            textRange.Save(memoryStream, DataFormats.XamlPackage);
+            FlowDocument flowDocument = new FlowDocument();
+
+            // Clear the content.
+            rtb.Document.Blocks.Clear();
+
+            int ret = 0;
+
+            while (true) {
+                ret++;
+                input.AppendText(".");
+                if (getWrappedLine(rtb) > 1) break;
+            }
+
+            // Restore the content when finished
+            new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd)
+                .Load(memoryStream, DataFormats.XamlPackage);
+
+            return ret - 1;
+        }
+
+        private void recalculate() {
+            if (characterPerLine == -1) return;
+
             string outputText = "";
-            string rawInput = (new TextRange(input.Document.ContentStart, input.Document.ContentEnd)).Text;
+            string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
             var arguments = new List<Argument>();
             foreach (string input in inputs) {
-                output.Text += "\n";
-                if (input == "") continue;
                 if (input.Contains("=")) { // variables
                     bool overrided = false;
                     Argument arg = new Argument(input);
@@ -40,22 +90,27 @@ namespace Minu {
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
                         overrided = true;
                     arguments.Add(arg);
-                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " + arg.getArgumentValue() + "\n";
+                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " + arg.getArgumentValue();
                 }
-                else { // evaluate
+                else if (input != "") { // evaluate
                     var expression = new Expression(input);
                     expression.addArguments(arguments.ToArray());
                     var result = expression.calculate();
-                    if(!double.IsNaN(result))
-                        outputText += result + "\n";
+                    if (!double.IsNaN(result))
+                        outputText += result;
                 }
+                outputText += new string('\n', (int)Math.Ceiling((double)input.Length / characterPerLine));
             }
 
             output.Text = outputText;
         }
 
+        private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
+            recalculate();
+        }
+
         private void titleLoaded(object sender, RoutedEventArgs args) {
-            this.MouseDown += delegate { DragMove(); };
+            MouseDown += delegate { DragMove(); };
         }
 
         private void btnClose(object sender, RoutedEventArgs e) {
@@ -70,6 +125,11 @@ namespace Minu {
    
         private void btnMini(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
+        }
+       
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            characterPerLine = getCharacterPerLine(input);
+            recalculate();
         }
     }
 }
