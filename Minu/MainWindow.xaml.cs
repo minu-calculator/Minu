@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ICSharpCode.AvalonEdit;
 using org.mariuszgromada.math.mxparser;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
@@ -34,51 +35,17 @@ namespace Minu {
         private int characterPerLine = -1;
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
-        private int getWrappedLine(RichTextBox rtb) {
-            TextPointer caretLineStart = rtb.CaretPosition.GetLineStartPosition(0);
-            TextPointer p = rtb.Document.ContentStart.GetLineStartPosition(0);
-            int caretLineNumber = 1;
-
-            while (true) {
-                if (caretLineStart.CompareTo(p) < 0) {
-                    break;
-                }
-
-                int result;
-                p = p.GetLineStartPosition(1, out result);
-
-                if (result == 0) {
-                    break;
-                }
-
-                caretLineNumber++;
-            }
-            return caretLineNumber;
-        }
-
-        private int getCharacterPerLine(RichTextBox rtb) {
-            // Save the content for future restoring.
-            MemoryStream memoryStream = new MemoryStream();
-            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-            textRange.Save(memoryStream, DataFormats.XamlPackage);
-            FlowDocument flowDocument = new FlowDocument();
-
-            // Clear the content.
-            rtb.Document.Blocks.Clear();
-
-            int ret = 0;
-
-            while (true) {
-                ret++;
-                input.AppendText(".");
-                if (getWrappedLine(rtb) > 1) break;
-            }
-
-            // Restore the content when finished
-            new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd)
-                .Load(memoryStream, DataFormats.XamlPackage);
-
-            return ret - 1;
+        private int getCharacterPerLine(TextEditor editor) {
+            var charWidth = new FormattedText(
+                ".",
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(editor.FontFamily, editor.FontStyle, editor.FontWeight, editor.FontStretch),
+                editor.FontSize,
+                Brushes.Black,
+                new NumberSubstitution(),
+                TextFormattingMode.Ideal).Width;
+            return (int) (editor.TextArea.TextView.ActualWidth / charWidth);
         }
 
         private string formattedOutput(double val, OutputMode mode) {
@@ -96,7 +63,7 @@ namespace Minu {
             OutputMode outputMode = OutputMode.Dec;
 
             string outputText = "";
-            string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
+            string rawInput = input.Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
             var arguments = new List<Argument>();
@@ -146,13 +113,12 @@ namespace Minu {
             }
             output.Text = outputText.TrimEnd('\n');
         }
-
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
             base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            DragMove();
         }
 
-        private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
+        private void textChangedEventHandler(object sender, EventArgs args) {
             recalculate();
         }
 
@@ -169,14 +135,18 @@ namespace Minu {
                 WindowState = WindowState.Normal;
             else WindowState = WindowState.Maximized;
         }
-   
+
         private void btnMini(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
         }
-       
+
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
             characterPerLine = getCharacterPerLine(input);
             recalculate();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+
         }
     }
 }
