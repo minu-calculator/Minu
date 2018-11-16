@@ -87,7 +87,6 @@
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True"
                                 TextChanged="textChangedEventHandler"/>
-                            <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="16 0 10 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
                             <GridSplitter Name="splitter" Grid.Column="1" Width="6"
                                          Padding="2" HorizontalAlignment="Center" Background="#303030" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
 using org.mariuszgromada.math.mxparser;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
@@ -162,7 +163,8 @@ namespace Minu {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-
+            input.SyntaxHighlighting =
+                HighlightingManager.Instance.GetDefinitionByExtension("minu");
         }
     }
 }
