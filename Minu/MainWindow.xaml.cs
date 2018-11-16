@@ -35,10 +35,12 @@ namespace Minu {
                     output.Text += new Expression(input).calculate();
                 output.Text += "\n";
             }
+            output.Text = output.Text.TrimEnd('\n');
         }
 
-        private void titleLoaded(object sender, RoutedEventArgs args) {
-            this.MouseDown += delegate { DragMove(); };
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
+            base.OnMouseLeftButtonDown(e);
+            this.DragMove();
         }
 
         private void btnClose(object sender, RoutedEventArgs e) {
