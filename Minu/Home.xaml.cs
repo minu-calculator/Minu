@@ -54,7 +54,7 @@ namespace Minu {
             var hwndSource = HwndSource.FromHwnd(handle);
             if (hwndSource != null) hwndSource.AddHook(WindowProc);
         }
-        
+
         private int characterPerLine = -1;
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
@@ -146,11 +146,6 @@ namespace Minu {
                 splitter.Visibility = Visibility.Visible;
             else
                 splitter.Visibility = Visibility.Collapsed;
-        }
-        
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
-            base.OnMouseLeftButtonDown(e);
-            DragMove();
         }
 
         private void textChangedEventHandler(object sender, EventArgs args) {
@@ -268,6 +263,16 @@ namespace Minu {
                 this.WindowState = System.Windows.WindowState.Maximized;
             else if (this.WindowState == System.Windows.WindowState.Maximized)
                 this.WindowState = System.Windows.WindowState.Normal;
+
+            System.Diagnostics.Debug.Write("some acewew2tion...");
+        }
+        private void headerThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                base.OnMouseLeftButtonDown(e);
+                DragMove();
+                System.Diagnostics.Debug.Write("some action...");
+            }
         }
         private void btnActionSupport_Click(object sender, RoutedEventArgs e) {
             // Load support page?

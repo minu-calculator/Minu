@@ -14,6 +14,11 @@
         FontFamily="Consolas"
         Loaded="Window_Loaded"
         SizeChanged="Window_SizeChanged">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0"
+            ResizeBorderThickness="10" />
+    </WindowChrome.WindowChrome>
     <Grid Background="#191a1d">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="359*"/>
