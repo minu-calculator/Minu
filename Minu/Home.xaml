@@ -30,7 +30,7 @@
 						Background="{x:Null}" 
 						Foreground="{x:Null}" Height="52" VerticalAlignment="Top"
                         DragDelta="headerThumb_DragDelta"
-                        MouseDoubleClick="headerThumb_MouseDoubleClick"
+                        PreviewMouseDoubleClick="headerThumb_MouseDoubleClick"
                         PreviewMouseLeftButtonDown="headerThumb_MouseLeftButtonDown"
 						/>
 

@@ -263,15 +263,12 @@ namespace Minu {
                 this.WindowState = System.Windows.WindowState.Maximized;
             else if (this.WindowState == System.Windows.WindowState.Maximized)
                 this.WindowState = System.Windows.WindowState.Normal;
-
-            System.Diagnostics.Debug.Write("some acewew2tion...");
         }
         private void headerThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             
             if (e.LeftButton == MouseButtonState.Pressed) {
                 base.OnMouseLeftButtonDown(e);
                 DragMove();
-                System.Diagnostics.Debug.Write("some action...");
             }
         }
         private void btnActionSupport_Click(object sender, RoutedEventArgs e) {
