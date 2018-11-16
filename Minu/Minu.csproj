@@ -105,6 +105,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="minu.xshd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -163,8 +163,20 @@ namespace Minu {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
+            IHighlightingDefinition customHighlighting;
+            using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("Minu.minu.xshd")) {
+                if (s == null)
+                    throw new InvalidOperationException("Could not find embedded resource");
+                using (System.Xml.XmlReader reader = new System.Xml.XmlTextReader(s)) {
+                    customHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.
+                        HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                }
+            }
+            // and register it in the HighlightingManager
+            HighlightingManager.Instance.RegisterHighlighting("minu", new string[] { ".minu" }, customHighlighting);
+
             input.SyntaxHighlighting =
-                HighlightingManager.Instance.GetDefinitionByExtension("minu");
+                HighlightingManager.Instance.GetDefinition("minu");
         }
     }
 }
