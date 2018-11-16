@@ -22,6 +22,11 @@ namespace Minu {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+
+        enum OutputMode {
+            Bin, Oct, Dec, Hex, Sci
+        };
+
         public MainWindow() {
             InitializeComponent();
         }
@@ -76,8 +81,19 @@ namespace Minu {
             return ret - 1;
         }
 
+        private string formattedOutput(double val, OutputMode mode) {
+            if (mode == OutputMode.Bin) return Convert.ToString((long)val, 2);
+            if (mode == OutputMode.Oct) return Convert.ToString((long)val, 8);
+            if (mode == OutputMode.Hex) return Convert.ToString((long)val, 16);
+            if (mode == OutputMode.Dec) return val.ToString("G");
+            if (mode == OutputMode.Sci) return val.ToString("E");
+            return val.ToString();
+        }
+
         private void recalculate() {
             if (characterPerLine == -1) return;
+
+            OutputMode outputMode = OutputMode.Dec;
 
             string outputText = "";
             string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
@@ -86,7 +102,15 @@ namespace Minu {
             var arguments = new List<Argument>();
             var functions = new List<Function>();
             foreach (string input in inputs) {
-                if (functionRegex.IsMatch(input)) { // functions
+                if (input.StartsWith("#")) { // comments + settings
+                    string trimed = input.Substring(1).TrimStart().ToLower();
+                    if (trimed.StartsWith("bin")) outputMode = OutputMode.Bin;
+                    else if (trimed.StartsWith("oct")) outputMode = OutputMode.Oct;
+                    else if (trimed.StartsWith("dec")) outputMode = OutputMode.Dec;
+                    else if (trimed.StartsWith("hex")) outputMode = OutputMode.Hex;
+                    else if (trimed.StartsWith("sci")) outputMode = OutputMode.Sci;
+                }
+                else if (functionRegex.IsMatch(input)) { // functions
                     bool overrided = false;
                     Function func = new Function(input);
                     func.addFunctions(functions.ToArray());
@@ -103,7 +127,8 @@ namespace Minu {
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
                         overrided = true;
                     arguments.Add(arg);
-                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " + arg.getArgumentValue();
+                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " +
+                        formattedOutput(arg.getArgumentValue(), outputMode);
                 }
                 else if (input != "") { // evaluate
                     var expression = new Expression(input);
@@ -111,7 +136,7 @@ namespace Minu {
                     expression.addFunctions(functions.ToArray());
                     var result = expression.calculate();
                     if (!double.IsNaN(result))
-                        outputText += result;
+                        outputText += formattedOutput(result, outputMode);
                 }
                 outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
             }
