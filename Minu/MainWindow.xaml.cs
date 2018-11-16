@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,11 +22,17 @@ namespace Minu {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+
+        enum OutputMode {
+            Bin, Oct, Dec, Hex, Sci
+        };
+
         public MainWindow() {
             InitializeComponent();
         }
 
         private int characterPerLine = -1;
+        private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
         private int getWrappedLine(RichTextBox rtb) {
             TextPointer caretLineStart = rtb.CaretPosition.GetLineStartPosition(0);
@@ -74,32 +81,68 @@ namespace Minu {
             return ret - 1;
         }
 
+        private string formattedOutput(double val, OutputMode mode) {
+            if (mode == OutputMode.Bin) return Convert.ToString((long)val, 2);
+            if (mode == OutputMode.Oct) return Convert.ToString((long)val, 8);
+            if (mode == OutputMode.Hex) return Convert.ToString((long)val, 16);
+            if (mode == OutputMode.Dec) return val.ToString("G");
+            if (mode == OutputMode.Sci) return val.ToString("E");
+            return val.ToString();
+        }
+
         private void recalculate() {
             if (characterPerLine == -1) return;
+
+            OutputMode outputMode = OutputMode.Dec;
 
             string outputText = "";
             string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
             var arguments = new List<Argument>();
+            var functions = new List<Function>();
+            double ans = 0.0;
+
             foreach (string input in inputs) {
-                if (input.Contains("=")) { // variables
+                if (input.StartsWith("#")) { // comments + settings
+                    string trimed = input.Substring(1).TrimStart().ToLower();
+                    if (trimed.StartsWith("bin")) outputMode = OutputMode.Bin;
+                    else if (trimed.StartsWith("oct")) outputMode = OutputMode.Oct;
+                    else if (trimed.StartsWith("dec")) outputMode = OutputMode.Dec;
+                    else if (trimed.StartsWith("hex")) outputMode = OutputMode.Hex;
+                    else if (trimed.StartsWith("sci")) outputMode = OutputMode.Sci;
+                }
+                else if (functionRegex.IsMatch(input)) { // functions
                     bool overrided = false;
-                    Argument arg = new Argument(input);
+                    Function func = new Function(input);
+                    func.addFunctions(functions.ToArray());
+                    if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
+                        overrided = true;
+                    functions.Add(func);
+                    outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+                }
+                else if (input.Contains("=")) { // variables
+                    bool overrided = false;
+                    Argument arg = new Argument(input, new Argument("ans", ans));
                     arg.addArguments(arguments.ToArray());
+                    arg.addFunctions(functions.ToArray());
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
                         overrided = true;
                     arguments.Add(arg);
-                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " + arg.getArgumentValue();
+                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " +
+                        formattedOutput(arg.getArgumentValue(), outputMode);
                 }
                 else if (input != "") { // evaluate
-                    var expression = new Expression(input);
+                    var expression = new Expression(input, new Argument("ans", ans));
                     expression.addArguments(arguments.ToArray());
+                    expression.addFunctions(functions.ToArray());
                     var result = expression.calculate();
-                    if (!double.IsNaN(result))
-                        outputText += result;
+                    if (!double.IsNaN(result)) {
+                        ans = result;
+                        outputText += formattedOutput(result, outputMode);
+                    }
                 }
-                outputText += new string('\n', (int)Math.Ceiling((double)input.Length / characterPerLine));
+                outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
             }
             output.Text = outputText.TrimEnd('\n');
         }
