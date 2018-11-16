@@ -75,10 +75,11 @@
                         </Button>
                     </Grid>
                     <ScrollViewer Margin="38 56 16 40">
-                        <Grid>
+                        <Grid Name="container">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5*" />
-                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="4*" Name="outputColumn" />
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
                                 Background="Transparent" BorderThickness="0" Name="input"
@@ -87,6 +88,10 @@
                                 WordWrap="True"
                                 TextChanged="textChangedEventHandler"/>
                             <TextBlock Grid.Column="1" Name="output" FontSize="16" Margin="16 0 10 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" Text=""></TextBlock>
+                            <GridSplitter Name="splitter" Grid.Column="1" Width="6"
+                                         Padding="2" HorizontalAlignment="Center" Background="#303030" BorderThickness="2" Visibility="Collapsed">
+                            </GridSplitter>
+                            <TextBlock Grid.Column="2" Name="output" FontSize="16" Margin="3 0 10 0" FontFamily="Consolas" Foreground="#82cc0f" TextAlignment="Right" TextWrapping="NoWrap" HorizontalAlignment="Right"></TextBlock>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

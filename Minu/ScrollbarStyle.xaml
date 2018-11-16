@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Minu">
-
     <Style x:Key="ScrollBarTrackThumb"
         TargetType="{x:Type Thumb}">
         <Setter Property="Template">
@@ -92,7 +91,6 @@
                                 TargetName="Thumb"
                                 Property="Background" />
                         </Trigger>
-
                         <Trigger Property="IsEnabled"
                                 Value="false">
                             <Setter TargetName="Thumb"
@@ -140,5 +138,5 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>
+    
