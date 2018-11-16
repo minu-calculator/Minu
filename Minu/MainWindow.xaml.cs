@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
 using org.mariuszgromada.math.mxparser;
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
@@ -34,51 +36,17 @@ namespace Minu {
         private int characterPerLine = -1;
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
-        private int getWrappedLine(RichTextBox rtb) {
-            TextPointer caretLineStart = rtb.CaretPosition.GetLineStartPosition(0);
-            TextPointer p = rtb.Document.ContentStart.GetLineStartPosition(0);
-            int caretLineNumber = 1;
-
-            while (true) {
-                if (caretLineStart.CompareTo(p) < 0) {
-                    break;
-                }
-
-                int result;
-                p = p.GetLineStartPosition(1, out result);
-
-                if (result == 0) {
-                    break;
-                }
-
-                caretLineNumber++;
-            }
-            return caretLineNumber;
-        }
-
-        private int getCharacterPerLine(RichTextBox rtb) {
-            // Save the content for future restoring.
-            MemoryStream memoryStream = new MemoryStream();
-            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-            textRange.Save(memoryStream, DataFormats.XamlPackage);
-            FlowDocument flowDocument = new FlowDocument();
-
-            // Clear the content.
-            rtb.Document.Blocks.Clear();
-
-            int ret = 0;
-
-            while (true) {
-                ret++;
-                input.AppendText(".");
-                if (getWrappedLine(rtb) > 1) break;
-            }
-
-            // Restore the content when finished
-            new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd)
-                .Load(memoryStream, DataFormats.XamlPackage);
-
-            return ret - 1;
+        private int getCharacterPerLine(TextEditor editor) {
+            var charWidth = new FormattedText(
+                ".",
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(editor.FontFamily, editor.FontStyle, editor.FontWeight, editor.FontStretch),
+                editor.FontSize,
+                Brushes.Black,
+                new NumberSubstitution(),
+                TextFormattingMode.Ideal).Width;
+            return (int) (editor.TextArea.TextView.ActualWidth / charWidth);
         }
 
         private string formattedOutput(double val, OutputMode mode) {
@@ -98,7 +66,7 @@ namespace Minu {
             bool inputOverflowed = false;
 
             string outputText = "";
-            string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
+            string rawInput = input.Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
             var arguments = new List<Argument>();
@@ -161,20 +129,36 @@ namespace Minu {
                 splitter.Visibility = Visibility.Visible;
             else splitter.Visibility = Visibility.Collapsed;
         }
-
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
 
-        private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
+        private void textChangedEventHandler(object sender, EventArgs args) {
             recalculate();
         }
-       
+
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
             characterPerLine = -1;
             characterPerLine = getCharacterPerLine(input);
             recalculate();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            IHighlightingDefinition customHighlighting;
+            using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("Minu.minu.xshd")) {
+                if (s == null)
+                    throw new InvalidOperationException("Could not find embedded resource");
+                using (System.Xml.XmlReader reader = new System.Xml.XmlTextReader(s)) {
+                    customHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.
+                        HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                }
+            }
+            // and register it in the HighlightingManager
+            HighlightingManager.Instance.RegisterHighlighting("minu", new string[] { ".minu" }, customHighlighting);
+
+            input.SyntaxHighlighting =
+                HighlightingManager.Instance.GetDefinition("minu");
         }
     }
 }
