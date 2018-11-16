@@ -95,6 +95,8 @@ namespace Minu {
 
             OutputMode outputMode = OutputMode.Dec;
 
+            bool inputOverflowed = false;
+
             string outputText = "";
             string rawInput = new TextRange(input.Document.ContentStart, input.Document.ContentEnd).Text;
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
@@ -142,14 +144,27 @@ namespace Minu {
                         outputText += formattedOutput(result, outputMode);
                     }
                 }
-                outputText += new string('\n', Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine)));
+                var inputActualLine = Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine));
+                if (inputActualLine > 1)
+                    inputOverflowed = true;
+                outputText += new string('\n', inputActualLine);
             }
             output.Text = outputText.TrimEnd('\n');
+            showSplitterIfNecessary(inputOverflowed);
+        }
+
+        private void showSplitterIfNecessary(bool inputOverflowed) {
+            double outDifference = outputColumn.ActualWidth - output.ActualWidth - output.Margin.Left - output.Margin.Right;
+            bool outOverflowed = outDifference <= 10;
+            
+            if (outOverflowed || inputOverflowed)
+                splitter.Visibility = Visibility.Visible;
+            else splitter.Visibility = Visibility.Collapsed;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) {
             base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            DragMove();
         }
 
         private void textChangedEventHandler(object sender, TextChangedEventArgs args) {
@@ -175,6 +190,7 @@ namespace Minu {
         }
        
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            characterPerLine = -1;
             characterPerLine = getCharacterPerLine(input);
             recalculate();
         }
