@@ -54,14 +54,10 @@ namespace Minu {
             foreach (string line in resultList) {
                 count++;
                 // Line up to input
-                if (count == 0) {
-                    // One less '\n' on the first line
-                    for (int i = 0; i < visualLineNum[count] - 1; i++)
-                        output.Text += '\n';
-                    output.Text += line;
-                    continue;
-                }
-                for (int i = 0; i < visualLineNum[count]; i++)
+                int bound = visualLineNum[count];
+                // One less '\n' on the first line
+                if (count == 0) bound -= 1;
+                for (int i = 0; i < bound; i++)
                     output.Text += '\n';
                 output.Text += line;
             }
