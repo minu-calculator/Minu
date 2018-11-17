@@ -43,6 +43,10 @@
                                 <ColumnDefinition Width="4*" Name="outputColumn" />
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
+                                Name="reference"
+                                Grid.Column="0" FontSize="16" FontFamily="Consolas"
+                                Visibility="Hidden"/>
+                            <avalonEdit:TextEditor
                                 Background="Transparent" BorderThickness="0" Name="input"
                                 Grid.Column="0" FontSize="16"
                                 Foreground="#dde1e4" FontFamily="Consolas"
@@ -53,12 +57,11 @@
                                 Padding="2" HorizontalAlignment="Center" 
                                 Background="#303030" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
-                            <avalonEdit:TextEditor
-                                Background="Transparent" BorderThickness="0" Name="output"
-                                Grid.Column="2" FontSize="16" 
-                                Margin="3 0 10 0" FontFamily="Consolas" 
-                                Foreground="#82cc0f" HorizontalAlignment="Right"
-                                WordWrap="False"/>
+                            <TextBlock 
+                                Grid.Column="2" LineStackingStrategy="BlockLineHeight" Name="output" FontSize="16" 
+                                Margin="3 0 10 0" FontFamily="Consolas"  
+                                Foreground="#82cc0f" TextAlignment="Right" 
+                                TextWrapping="NoWrap" HorizontalAlignment="Right"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

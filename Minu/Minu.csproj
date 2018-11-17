@@ -120,6 +120,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="minu.xshd" />
+    <EmbeddedResource Include="output.xshd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
