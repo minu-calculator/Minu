@@ -85,6 +85,7 @@ namespace Minu {
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            recalculate();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
