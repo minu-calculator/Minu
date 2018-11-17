@@ -6,7 +6,7 @@
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
-        Title="Minu" Height="500" Width="500"
+        Title="Minu" Height="500" Width="800"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 

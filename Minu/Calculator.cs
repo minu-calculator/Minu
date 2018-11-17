@@ -1,18 +1,14 @@
 ﻿using org.mariuszgromada.math.mxparser;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace Minu
-{
+namespace Minu {
     class Calculator {
 
         public int characterPerLine { get; set; }
         public bool isInputOverflowed { get; private set; }
-        
+
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
         public string Calculate(string rawInput) {
@@ -28,8 +24,19 @@ namespace Minu
             var arguments = new List<Argument>();
             var functions = new List<Function>();
             double ans = 0.0;
+            int count = 0;
 
             foreach (string input in inputs) {
+
+                count++;
+
+                // Add \n to align with the input
+                var inputActualLine = Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine));
+                if (inputActualLine > 1)
+                    isInputOverflowed = true;
+                //if (count > 1)
+                    outputText += new string('\n', inputActualLine - 1);
+
                 if (input.StartsWith("#")) { // comments + settings
                     string trimed = input.Substring(1).TrimStart().ToLower();
                     if (trimed.StartsWith("bin")) outputFormatter = new BinFormatter();
@@ -46,7 +53,9 @@ namespace Minu
                         if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
                             overrided = true;
                         functions.Add(func);
-                        outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+
+                        //show function assignment
+                        //outputText += (overrided ? "(*) " : "") + func.getFunctionName();
                     }
                 }
                 else if (input.Contains("=")) { // variables
@@ -57,7 +66,9 @@ namespace Minu
                     if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
                         overrided = true;
                     arguments.Add(arg);
-                    outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " +
+                    outputText +=
+                        //show variable assignment
+                        //(overrided ? "(*) " : "") + arg.getArgumentName() + " = " +
                         outputFormatter.Format(arg.getArgumentValue());
                 }
                 else if (input != "") { // evaluate
@@ -70,14 +81,9 @@ namespace Minu
                         outputText += outputFormatter.Format(result);
                     }
                 }
-                // Add \n to align with the input
-                var inputActualLine = Math.Max(1, (int)Math.Ceiling((double)input.Length / characterPerLine));
-                if (inputActualLine > 1)
-                    isInputOverflowed = true;
-                outputText += new string('\n', inputActualLine);
+                outputText += '\n';
             }
             return outputText.TrimEnd('\n');
         }
-
     }
 }
