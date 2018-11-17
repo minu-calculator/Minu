@@ -1,41 +1,170 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="minu" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Comment" foreground="Green" />
-	<Color name="String" foreground="Blue" />
-	
-	<!-- This is the main ruleset. -->
-	<RuleSet>
-		<Span color="Comment" begin="//" />
-		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
-		
-		<Span color="String">
-			<Begin>"</Begin>
-			<End>"</End>
-			<RuleSet>
-				<!-- nested span for escape sequences -->
-				<Span begin="\\" end="." />
-			</RuleSet>
-		</Span>
-		
-		<Keywords fontWeight="bold" foreground="Yellow">
-			<Word>if</Word>
-      <Word>else</Word>
-      <Word>fuck</Word>
-			<!-- ... -->
+	<Color name="Comment" foreground="#61616a" />
+	<Color name="Function" foreground="Green" />
+  <Color name="Variable" foreground="#60b8eb" />
+  <Color name="Keyword" foreground="Orange" />
+  <Color name="Constant" foreground="Yellow" />
+  
+  <!-- This is the main ruleset. -->
+  <RuleSet>
+		<Span color="Comment" begin="#" />
+
+		<Keywords fontWeight="bold" color="Keyword">
+      <Word>sin</Word>
+      <Word>cos</Word>
+      <Word>tan</Word>
+      <Word>tg</Word>
+      <Word>ctan</Word>
+      <Word>ctg</Word>
+      <Word>cot</Word>
+      <Word>sec</Word>
+      <Word>cosec</Word>
+      <Word>csc</Word>
+      <Word>asin</Word>
+      <Word>arsin</Word>
+      <Word>arcsin</Word>
+      <Word>acos</Word>
+      <Word>arcos</Word>
+      <Word>arccos</Word>
+      <Word>atan</Word>
+      <Word>arctan</Word>
+      <Word>atg</Word>
+      <Word>arctg</Word>
+      <Word>actan</Word>
+      <Word>arcctan</Word>
+      <Word>actg</Word>
+      <Word>arcctg</Word>
+      <Word>acot</Word>
+      <Word>arccot</Word>
+      <Word>ln</Word>
+      <Word>log2</Word>
+      <Word>log10</Word>
+      <Word>rad</Word>
+      <Word>exp</Word>
+      <Word>sqrt</Word>
+      <Word>sinh</Word>
+      <Word>cosh</Word>
+      <Word>tanh</Word>
+      <Word>tgh</Word>
+      <Word>ctanh</Word>
+      <Word>coth</Word>
+      <Word>ctgh</Word>
+      <Word>sech</Word>
+      <Word>csch</Word>
+      <Word>cosech</Word>
+      <Word>deg</Word>
+      <Word>abs</Word>
+      <Word>sgn</Word>
+      <Word>floor</Word>
+      <Word>ceil</Word>
+      <Word>not</Word>
+      <Word>asinh</Word>
+      <Word>arsinh</Word>
+      <Word>arcsinh</Word>
+      <Word>acosh</Word>
+      <Word>arcosh</Word>
+      <Word>arccosh</Word>
+      <Word>atanh</Word>
+      <Word>arctanh</Word>
+      <Word>atgh</Word>
+      <Word>arctgh</Word>
+      <Word>actanh</Word>
+      <Word>arcctanh</Word>
+      <Word>acoth</Word>
+      <Word>arcoth</Word>
+      <Word>arccoth</Word>
+      <Word>actgh</Word>
+      <Word>arcctgh</Word>
+      <Word>asech</Word>
+      <Word>arsech</Word>
+      <Word>arcsech</Word>
+      <Word>acsch</Word>
+      <Word>arcsch</Word>
+      <Word>arccsch</Word>
+      <Word>acosech</Word>
+      <Word>arcosech</Word>
+      <Word>arccosech</Word>
+      <Word>sinc</Word>
+      <Word>Sa</Word>
+      <Word>Sinc</Word>
+      <Word>Bell</Word>
+      <Word>Luc</Word>
+      <Word>Fib</Word>
+      <Word>harm</Word>
+      <Word>ispr</Word>
+      <Word>Pi</Word>
+      <Word>Ei</Word>
+      <Word>li</Word>
+      <Word>Li</Word>
+      <Word>erf</Word>
+      <Word>erfc</Word>
+      <Word>erfInv</Word>
+      <Word>erfcInv</Word>
+      <Word>ulp</Word>
+      <Word>log</Word>
+      <Word>mod</Word>
+      <Word>C</Word>
+      <Word>Bern</Word>
+      <Word>Stirl1</Word>
+      <Word>Stirl2</Word>
+      <Word>Worp</Word>
+      <Word>Euler</Word>
+      <Word>KDelta</Word>
+      <Word>EulerPol</Word>
+      <Word>Harm</Word>
+      <Word>rUni</Word>
+      <Word>rUnid</Word>
+      <Word>round</Word>
+      <Word>rNor</Word>
+      <Word>if</Word>
+      <Word>chi</Word>
+      <Word>CHi</Word>
+      <Word>Chi</Word>
+      <Word>cHi</Word>
+      <Word>pUni</Word>
+      <Word>cUni</Word>
+      <Word>qUni</Word>
+      <Word>pNor</Word>
+      <Word>cNor</Word>
+      <Word>qNor</Word>
+      <Word>iff</Word>
+      <Word>min</Word>
+      <Word>max</Word>
+      <Word>ConFrac</Word>
+      <Word>ConPol</Word>
+      <Word>gcd</Word>
+      <Word>lcm</Word>
+      <Word>add</Word>
+      <Word>multi</Word>
+      <Word>mean</Word>
+      <Word>var</Word>
+      <Word>std</Word>
+      <Word>rList</Word>
+      <Word>sum</Word>
+      <Word>prod</Word>
+      <Word>int</Word>
+      <Word>der</Word>
+      <Word>der-</Word>
+      <Word>der+</Word>
+      <Word>dern</Word>
+      <Word>diff</Word>
+      <Word>difb</Word>
+      <Word>avg</Word>
+      <Word>vari</Word>
+      <Word>stdi</Word>
+      <Word>mini</Word>
+      <Word>maxi</Word>
+      <Word>solve</Word>
 		</Keywords>
-		
-		<Keywords fontWeight="bold" fontStyle="italic" foreground="Red">
-			<Word>AvalonEdit</Word>
-		</Keywords>
-		
-		<!-- Digits -->
-		<Rule foreground="#60b8eb">
-            \b0[xX][0-9a-fA-F]+  # hex number
-        |    \b
-            (    \d+(\.[0-9]+)?   #number with optional floating point
-            |    \.[0-9]+         #or just starting with floating point
-            )
-            ([eE][+-]?[0-9]+)? # optional exponent
-        </Rule>
-	</RuleSet>
+
+    <Keywords color="Constant">
+      <Word>pi</Word>
+      <Word>e</Word>
+    </Keywords>
+    <Rule color="Constant">\[.*?\]</Rule>
+    <Rule color="Function">\b[a-zA-Z_]+\w*(?=\()</Rule>
+    <Rule color="Variable">\b[a-zA-Z_]+\w*</Rule>
+    
+  </RuleSet>
 </SyntaxDefinition>
