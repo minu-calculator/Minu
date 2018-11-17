@@ -43,10 +43,6 @@
                                 <ColumnDefinition Width="4*" Name="outputColumn" />
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
-                                Name="reference"
-                                Grid.Column="0" FontSize="16" FontFamily="Consolas"
-                                Visibility="Hidden"/>
-                            <avalonEdit:TextEditor
                                 Background="Transparent" BorderThickness="0" Name="input"
                                 Grid.Column="0" FontSize="16"
                                 Foreground="#dde1e4" FontFamily="Consolas"

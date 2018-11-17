@@ -10,17 +10,20 @@ namespace Minu
 {
     class Utils
     {
-        static public int GetCharacterPerLine(TextEditor editor) {
-            var charWidth = new FormattedText(
-                ".",
-                System.Globalization.CultureInfo.CurrentCulture,
-                System.Windows.FlowDirection.LeftToRight,
-                new Typeface(editor.FontFamily, editor.FontStyle, editor.FontWeight, editor.FontStretch),
-                editor.FontSize,
-                Brushes.Black,
-                new NumberSubstitution(),
-                TextFormattingMode.Ideal).Width;
-            return (int)(editor.TextArea.TextView.ActualWidth / charWidth);
+        // Returns an array that contains the number of lines visually presented
+        // in each input line after wrapping
+        static public int[] GetWrappedLineCount(TextEditor editor, double baseLineHeight) {
+            var visualLineNum = new int[editor.LineCount];
+            for (int i = 0; i < editor.LineCount; i++) {
+                double bottom = 0;
+                double top = editor.TextArea.TextView.GetVisualTopByDocumentLine(i + 1);
+                if (i + 2 <= editor.LineCount)
+                    bottom = editor.TextArea.TextView.GetVisualTopByDocumentLine(i + 2);
+                else
+                    bottom = editor.TextArea.TextView.DocumentHeight;
+                visualLineNum[i] = (int)Math.Round((bottom - top) / baseLineHeight);
+            }
+            return visualLineNum;
         }
     }
 }

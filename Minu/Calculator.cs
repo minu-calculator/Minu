@@ -5,15 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace Minu {
     class Calculator {
-
-        public int characterPerLine { get; set; }
+        
         public bool isInputOverflowed { get; private set; }
 
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
         public List<string> Calculate(string rawInput) {
-            if (characterPerLine < 0) return new List<string>();
-
             IOutputFormatter outputFormatter = new DecFormatter();
 
             isInputOverflowed = false;
