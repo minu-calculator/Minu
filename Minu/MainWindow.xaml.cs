@@ -77,10 +77,12 @@ namespace Minu {
                     bool overrided = false;
                     Function func = new Function(input);
                     func.addFunctions(functions.ToArray());
-                    if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
-                        overrided = true;
-                    functions.Add(func);
-                    outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+                    if (func.getFunctionName() != null) {
+                        if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
+                            overrided = true;
+                        functions.Add(func);
+                        outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+                    }
                 }
                 else if (input.Contains("=")) { // variables
                     bool overrided = false;
