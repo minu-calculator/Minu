@@ -34,6 +34,7 @@
 						Foreground="{x:Null}" Height="52" VerticalAlignment="Top"
                         DragDelta="headerThumb_DragDelta"
                         PreviewMouseDoubleClick="headerThumb_MouseDoubleClick"
+                        PreviewMouseLeftButtonDown="headerThumb_MouseLeftButtonDown"
 						/>
                     <StackPanel x:Name="homeHeaderActionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="26" Margin="0,0,0,0">
                         <Button x:Name="btnActionSupport" ToolTip="Support" Width="34" Height="26" Margin="0" Style="{StaticResource WindowActionButton}" Visibility="Collapsed" VerticalAlignment="Top" d:LayoutOverrides="Height" Click="btnActionSupport_Click">

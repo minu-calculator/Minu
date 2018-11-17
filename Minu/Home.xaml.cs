@@ -249,6 +249,10 @@ namespace Minu {
             else if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
         }
+        private void headerThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
+        }
 
         private void btnActionSupport_Click(object sender, RoutedEventArgs e) {
             // Load support page?
