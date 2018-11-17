@@ -1,18 +1,15 @@
-﻿using CloseableTabItemDemo;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using Minu.Backend;
-using Minu.Metro.Controls.PageTemplates;
-using Minu.Metro.Dialogs;
 using Minu.Metro.Native;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
@@ -36,7 +33,7 @@ namespace Minu {
 
             UpdateTitleText("Minu");
             UpdateStatusText("Ready...");
-            
+
             // Set width/height/state from last session
             if (!double.IsNaN(Settings.ApplicationSizeHeight))
                 Height = Settings.ApplicationSizeHeight;
@@ -175,23 +172,23 @@ namespace Minu {
                 HighlightingManager.Instance.GetDefinition("minu");
         }
 
-
-
-        //TEMPLATE SECTION
+        /*
+         * BELOW IS UI TEMPLATE SECTION
+        */
 
         /// <summary>
-        /// Set the title text of Metro WPF Template
+        /// Set the title text
         /// </summary>
-        /// <param name="title">Current Title, Metro WPF Template shall add the rest for you.</param>
+        /// <param name="title">Current Title</param>
         public void UpdateTitleText(string title) {
             this.Title = title.Trim();
             lblTitle.Text = title.Trim();
         }
 
         /// <summary>
-		/// Set the status text of Metro WPF Template
+		/// Set the status text at the buttom
         /// </summary>
-        /// <param name="status">Current Status of Metro WPF Template</param>
+        /// <param name="status">Current Status Text</param>
         public void UpdateStatusText(string status) {
             this.Status.Text = status;
 
@@ -219,18 +216,6 @@ namespace Minu {
             if (yadjust > this.MinHeight)
                 this.Height = yadjust;
         }
-        private void ResizeRight_DragDelta(object sender, DragDeltaEventArgs e) {
-            double xadjust = this.Width + e.HorizontalChange;
-
-            if (xadjust > this.MinWidth)
-                this.Width = xadjust;
-        }
-        private void ResizeBottom_DragDelta(object sender, DragDeltaEventArgs e) {
-            double yadjust = this.Height + e.VerticalChange;
-
-            if (yadjust > this.MinHeight)
-                this.Height = yadjust;
-        }
 
         private void Window_StateChanged(object sender, EventArgs e) {
             if (this.WindowState == System.Windows.WindowState.Normal) {
@@ -241,7 +226,7 @@ namespace Minu {
                 Settings.UpdateSettings();
 
                 btnActionRestore.Visibility = System.Windows.Visibility.Collapsed;
-                btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = ResizeRight.Visibility = ResizeBottom.Visibility = System.Windows.Visibility.Visible;
+                btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = System.Windows.Visibility.Visible;
             }
             else if (this.WindowState == System.Windows.WindowState.Maximized) {
                 borderFrame.BorderThickness = new Thickness(0, 0, 0, 23);
@@ -249,7 +234,7 @@ namespace Minu {
                 Settings.UpdateSettings();
 
                 btnActionRestore.Visibility = System.Windows.Visibility.Visible;
-                btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = ResizeRight.Visibility = ResizeBottom.Visibility = System.Windows.Visibility.Collapsed;
+                btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = System.Windows.Visibility.Collapsed;
             }
             /*
              * ResizeDropVector
@@ -259,29 +244,23 @@ namespace Minu {
              */
         }
         private void headerThumb_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            if (this.WindowState == System.Windows.WindowState.Normal)
-                this.WindowState = System.Windows.WindowState.Maximized;
-            else if (this.WindowState == System.Windows.WindowState.Maximized)
-                this.WindowState = System.Windows.WindowState.Normal;
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
         }
-        private void headerThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            
-            if (e.LeftButton == MouseButtonState.Pressed) {
-                base.OnMouseLeftButtonDown(e);
-                DragMove();
-            }
-        }
+
         private void btnActionSupport_Click(object sender, RoutedEventArgs e) {
             // Load support page?
         }
         private void btnActionMinimize_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = System.Windows.WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
         private void btnActionRestore_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = System.Windows.WindowState.Normal;
+            this.WindowState = WindowState.Normal;
         }
         private void btnActionMaxamize_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = System.Windows.WindowState.Maximized;
+            this.WindowState = WindowState.Maximized;
         }
         private void btnActionClose_Click(object sender, System.Windows.RoutedEventArgs e) {
             Application.Current.Shutdown();
@@ -299,9 +278,9 @@ namespace Minu {
                     handled = true;
                     break;
             }
-
             return (System.IntPtr)0;
         }
+
         private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam) {
             Monitor_Workarea.MINMAXINFO mmi = (Monitor_Workarea.MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(Monitor_Workarea.MINMAXINFO));
 
@@ -331,6 +310,7 @@ namespace Minu {
 
             Marshal.StructureToPtr(mmi, lParam, true);
         }
+
         public int OpacityIndex = 0;
         public void ShowMask() {
             OpacityIndex++;
@@ -342,7 +322,6 @@ namespace Minu {
             if (OpacityIndex == 0)
                 OpacityMask.Visibility = System.Windows.Visibility.Collapsed;
         }
-
         private void menuCloseApplication_Click(object sender, RoutedEventArgs e) { Application.Current.Shutdown(); }
     }
 }
