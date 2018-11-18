@@ -53,11 +53,13 @@
                                 Padding="2" HorizontalAlignment="Center" 
                                 Background="#303030" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
-                            <TextBlock 
-                                Grid.Column="2" LineStackingStrategy="BlockLineHeight" Name="output" FontSize="16" 
+                            <avalonEdit:TextEditor 
+                                Background="Transparent"
+                                IsReadOnly="True" MouseMove="output_MouseMove"
+                                Grid.Column="2" Name="output" FontSize="16" 
                                 Margin="3 0 10 0" FontFamily="Consolas"  
-                                Foreground="#82cc0f" TextAlignment="Right" 
-                                TextWrapping="NoWrap" HorizontalAlignment="Right"/>
+                                HorizontalScrollBarVisibility="Disabled"
+                                Foreground="#82cc0f" HorizontalAlignment="Right"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

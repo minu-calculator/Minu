@@ -37,7 +37,7 @@ namespace Minu {
         }
 
         private void output_MouseMove(object sender, EventArgs e) {
-          /*  if (output.LineCount <= 0) return;
+            if (output.LineCount <= 0) return;
             output.Text = output.Text.Replace("　", "").Replace("　", "");
             double baseLineHeight = output.TextArea.TextView.DocumentHeight - output.TextArea.TextView.GetVisualTopByDocumentLine(output.LineCount);
             Point p = Mouse.GetPosition(output);
@@ -46,7 +46,7 @@ namespace Minu {
             var line = output.TextArea.Document.GetLineByNumber(lineNum);
             if (line.ToString().Contains("　")) return;
             output.TextArea.Document.Insert(line.Offset, "　");
-            output.TextArea.Document.Insert(line.EndOffset, "　");*/
+            output.TextArea.Document.Insert(line.EndOffset, "　");
         }
 
         private void recalculate() {
@@ -90,8 +90,11 @@ namespace Minu {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             Utils.LoadHighlightRule("minu.xshd", "minu");
+            Utils.LoadHighlightRule("output.xshd", "output");
             input.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("minu");
-            
+            output.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("output");
+
+            output.TextArea.TextView.Options.Alignment = TextAlignment.Right;
             baseLineHeight = measureLineHeight();
             recalculate();
         }
