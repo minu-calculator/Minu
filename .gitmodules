@@ -1,0 +1,3 @@
+[submodule "AvalonEdit"]
+	path = AvalonEdit
+	url = https://github.com/minu-calculator/AvalonEdit.git
