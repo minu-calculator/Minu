@@ -38,15 +38,22 @@ namespace Minu {
 
         private void output_MouseMove(object sender, EventArgs e) {
             if (output.LineCount <= 0) return;
-            output.Text = output.Text.Replace("　", "").Replace("　", "");
-            double baseLineHeight = output.TextArea.TextView.DocumentHeight - output.TextArea.TextView.GetVisualTopByDocumentLine(output.LineCount);
+            output.Text = output.Text.Replace("\u2000", "");
+
             Point p = Mouse.GetPosition(output);
             int lineNum = (int)Math.Ceiling(p.Y / baseLineHeight);
             if (lineNum > output.LineCount) return;
+
             var line = output.TextArea.Document.GetLineByNumber(lineNum);
-            if (line.ToString().Contains("　")) return;
-            output.TextArea.Document.Insert(line.Offset, "　");
-            output.TextArea.Document.Insert(line.EndOffset, "　");
+            var visualLine = output.TextArea.TextView.GetOrConstructVisualLine(line);
+            if (visualLine == null) return; // ignore invisible lines
+
+            var visualXStart = visualLine.GetVisualPosition(0, VisualYPosition.Baseline).X;
+            var visualXEnd = visualLine.GetVisualPosition(line.Length, VisualYPosition.Baseline).X;
+            if (p.X < visualXStart || p.X > visualXEnd) return;
+
+            if (line.ToString().Contains("\u2000")) return;
+            output.TextArea.Document.Insert(line.Offset, "\u2000\u2000");
         }
 
         private void recalculate() {
@@ -63,10 +70,12 @@ namespace Minu {
                 int bound = visualLineNums[i];
                 // One less '\n' on the first line
                 if (i == 0) bound--;
-                outputText += (bound > 0?new string('\n', bound):"") + resultList[i];
+                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
             }
             output.Text = outputText;
+            output.InvalidateMeasure();
 
+            output.InvalidateVisual();
             // Show the splitter if necessary
             bool outputOverflowed = (outputColumn.ActualWidth - output.ActualWidth - output.Margin.Left - output.Margin.Right) <= 10;
             if (outputOverflowed || calculator.isInputOverflowed)

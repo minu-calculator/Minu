@@ -4,6 +4,6 @@
   
   <!-- This is the main ruleset. -->
   <RuleSet>
-    <Span color="Hovered" begin="　" end="　" />
+    <Span color="Hovered" begin="\u2000" end="\u2001" />
   </RuleSet>
 </SyntaxDefinition>
