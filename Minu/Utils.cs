@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Minu
@@ -40,5 +41,6 @@ namespace Minu
             }
             HighlightingManager.Instance.RegisterHighlighting(ruleName, new string[] { "." + ruleName }, customHighlighting);
         }
+
     }
 }
