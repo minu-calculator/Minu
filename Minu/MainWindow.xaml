@@ -58,8 +58,8 @@
                                 IsReadOnly="True" MouseMove="output_MouseMove"
                                 Grid.Column="2" Name="output" FontSize="16" 
                                 Margin="3 0 10 0" FontFamily="Consolas"  
-                                HorizontalScrollBarVisibility="Disabled"
-                                Foreground="#82cc0f" HorizontalAlignment="Right"/>
+                                HorizontalScrollBarVisibility="Hidden"
+                                Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>
