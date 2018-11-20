@@ -22,6 +22,8 @@ namespace Minu {
         public void MouseMove(EventArgs e) {
             if (output.LineCount <= 0) return;
 
+            EnsureCache();
+
             // Estimate the line number according to cursor position
             Point p = Mouse.GetPosition(output);
             int lineNum = (int)Math.Ceiling(p.Y / output.TextArea.TextView.Options.LineHeight);
@@ -29,30 +31,22 @@ namespace Minu {
             if (lineNum <= 0 || lineNum > output.LineCount) {
                 if (lastHighlightedLine != -1) {
                     var offset = visualLineInfoCache[lastHighlightedLine].Offset;
-                    output.TextArea.Document.Remove(offset, 2 + (lastClicked ? 1 : 0));
+                    output.TextArea.Document.Remove(offset, 1 + (lastClicked ? 1 : 0));
                     lastHighlightedLine = -1;
                     lastClicked = false;
                 }
                 return;
             }
 
-            if (output.TextArea.Document.GetLineByNumber(lineNum).Length == 0) return;
-
-            // Rebuild cache if hasn't yet
-            if (visualLineInfoCache.Count == 0) {
-                for (int i = 1; i <= output.TextArea.Document.LineCount; ++i)
-                    visualLineInfoCache.Add(i, new VisualLineInfo(output, i));
-            }
-
             // Calculated if the line is actually selected.
             var visualLine = visualLineInfoCache[lineNum];
-            bool validSelection = visualLine.Length != 0 && visualLine.XStart <= p.X && p.X <= visualLine.XEnd;
+            bool validSelection = visualLine.Length != 1 && visualLine.XStart <= p.X && p.X <= visualLine.XEnd;
 
             // If (1) anything is highlighted and (2) the current line is not to be highlighted,
             // remove the old highlight mark
             if (lastHighlightedLine != -1 && (lastHighlightedLine != lineNum || !validSelection)) {
                 var offset = visualLineInfoCache[lastHighlightedLine].Offset;
-                output.TextArea.Document.Remove(offset, 2 + (lastClicked ? 1 : 0));
+                output.TextArea.Document.Remove(offset, 1 + (lastClicked ? 1 : 0));
                 lastHighlightedLine = -1;
                 lastClicked = false;
             }
@@ -60,7 +54,7 @@ namespace Minu {
             if (!validSelection) return; // if nothing is selected, do nothing
 
             if (lineNum != lastHighlightedLine) // need to highlight
-                output.TextArea.Document.Insert(visualLine.Offset, "\u2000\u2000");
+                output.TextArea.Document.Insert(visualLine.Offset, "\u2000");
             lastHighlightedLine = lineNum;
 
             bool nowClicked = ((MouseEventArgs)e).LeftButton == MouseButtonState.Pressed;
@@ -76,6 +70,16 @@ namespace Minu {
         public void InvalidateCache() {
             visualLineInfoCache.Clear();
             lastHighlightedLine = -1;
+        }
+
+        public void EnsureCache() {
+
+            // Rebuild cache if hasn't yet
+            if (visualLineInfoCache.Count == 0) {
+                for (int i = 1; i <= output.TextArea.Document.LineCount; ++i)
+                    visualLineInfoCache.Add(i, new VisualLineInfo(output, i));
+            }
+
         }
 
     }
