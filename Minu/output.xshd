@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="minu" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Hovered" foreground="#FFFFFF" background="Green" />
+  <Color name="Clicked" foreground="#FFFFFF" background="Red" />
   
   <!-- This is the main ruleset. -->
   <RuleSet>
     <Span color="Hovered" begin="\u2000" end="\u2001" />
+    <Span color="Clicked" begin="\u200B" end="\u2001" />
   </RuleSet>
 </SyntaxDefinition>
