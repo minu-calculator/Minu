@@ -44,14 +44,6 @@ namespace Minu {
             Window_StateChanged(null, null);
         }
 
-        protected override void OnSourceInitialized(EventArgs e) {
-            base.OnSourceInitialized(e);
-
-            var handle = (new WindowInteropHelper(this)).Handle;
-            var hwndSource = HwndSource.FromHwnd(handle);
-            if (hwndSource != null) hwndSource.AddHook(WindowProc);
-        }
-
         private int characterPerLine = -1;
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
 
@@ -218,22 +210,22 @@ namespace Minu {
         }
 
         private void Window_StateChanged(object sender, EventArgs e) {
-            if (this.WindowState == System.Windows.WindowState.Normal) {
+            if (this.WindowState == WindowState.Normal) {
                 borderFrame.BorderThickness = new Thickness(1, 1, 1, 23);
                 Settings.ApplicationSizeMaximize = false;
                 Settings.ApplicationSizeHeight = this.Height;
                 Settings.ApplicationSizeWidth = this.Width;
                 Settings.UpdateSettings();
 
-                btnActionRestore.Visibility = System.Windows.Visibility.Collapsed;
+                btnActionRestore.Visibility = Visibility.Collapsed;
                 btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = System.Windows.Visibility.Visible;
             }
-            else if (this.WindowState == System.Windows.WindowState.Maximized) {
+            else if (this.WindowState == WindowState.Maximized) {
                 borderFrame.BorderThickness = new Thickness(0, 0, 0, 23);
                 Settings.ApplicationSizeMaximize = true;
                 Settings.UpdateSettings();
 
-                btnActionRestore.Visibility = System.Windows.Visibility.Visible;
+                btnActionRestore.Visibility = Visibility.Visible;
                 btnActionMaxamize.Visibility = ResizeDropVector.Visibility = ResizeDrop.Visibility = System.Windows.Visibility.Collapsed;
             }
             /*
@@ -258,63 +250,17 @@ namespace Minu {
             // Load support page?
         }
         private void btnActionMinimize_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
         private void btnActionRestore_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = WindowState.Normal;
+            WindowState = WindowState.Normal;
         }
         private void btnActionMaxamize_Click(object sender, System.Windows.RoutedEventArgs e) {
-            this.WindowState = WindowState.Maximized;
+            WindowState = WindowState.Maximized;
         }
         private void btnActionClose_Click(object sender, System.Windows.RoutedEventArgs e) {
             Application.Current.Shutdown();
         }
-
-        private System.IntPtr WindowProc(
-              System.IntPtr hwnd,
-              int msg,
-              System.IntPtr wParam,
-              System.IntPtr lParam,
-              ref bool handled) {
-            switch (msg) {
-                case 0x0024:
-                    WmGetMinMaxInfo(hwnd, lParam);
-                    handled = true;
-                    break;
-            }
-            return (System.IntPtr)0;
-        }
-
-        private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam) {
-            Monitor_Workarea.MINMAXINFO mmi = (Monitor_Workarea.MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(Monitor_Workarea.MINMAXINFO));
-
-            // Adjust the maximized size and position to fit the work area of the correct monitor
-            int MONITOR_DEFAULTTONEAREST = 0x00000002;
-            System.IntPtr monitor = Monitor_Workarea.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-
-            if (monitor != System.IntPtr.Zero) {
-                System.Windows.Forms.Screen scrn = System.Windows.Forms.Screen.FromHandle(new WindowInteropHelper(this).Handle);
-
-                Monitor_Workarea.MONITORINFO monitorInfo = new Monitor_Workarea.MONITORINFO();
-                Monitor_Workarea.GetMonitorInfo(monitor, monitorInfo);
-                Monitor_Workarea.RECT rcWorkArea = monitorInfo.rcWork;
-                Monitor_Workarea.RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
-
-                /*
-                mmi.ptMaxPosition.x = Math.Abs(scrn.Bounds.Left - scrn.WorkingArea.Left);
-                mmi.ptMaxPosition.y = Math.Abs(scrn.Bounds.Top - scrn.WorkingArea.Top);
-                mmi.ptMaxSize.x = Math.Abs(scrn.Bounds.Right - scrn.WorkingArea.Left);
-                mmi.ptMaxSize.y = Math.Abs(scrn.Bounds.Bottom - scrn.WorkingArea.Top);
-                */
-            }
-
-            Marshal.StructureToPtr(mmi, lParam, true);
-        }
-
         public int OpacityIndex = 0;
         public void ShowMask() {
             OpacityIndex++;
