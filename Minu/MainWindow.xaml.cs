@@ -2,11 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace Minu {
@@ -51,7 +46,7 @@ namespace Minu {
                 int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / baseLineHeight);
                 // One less '\n' on the first line
                 if (i == 0) bound--;
-                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
+                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2001";
             }
             output.Text = outputText;
             selectionHelper?.InvalidateCache();
