@@ -38,9 +38,6 @@
     <StartupObject>Minu.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
     <Reference Include="MathParser.org-mXparser, Version=4.2.0.0, Culture=neutral, PublicKeyToken=0fbab7add73ed6e2, processorArchitecture=MSIL">
       <HintPath>..\packages\MathParser.org-mXparser.4.2.2\lib\net461\MathParser.org-mXparser.dll</HintPath>
     </Reference>
@@ -110,6 +107,9 @@
     <Compile Include="Calculator.cs" />
     <Compile Include="MouseSelectionHelper.cs" />
     <Compile Include="OutputFormatters.cs" />
+    <Compile Include="Resources\SettingsModule.xaml.cs">
+      <DependentUpon>SettingsModule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TitleBar.xaml.cs">
       <DependentUpon>TitleBar.xaml</DependentUpon>
     </Compile>
@@ -183,9 +183,6 @@
     <Compile Include="Metro\Dialogs\MetroMessageBox.cs" />
     <Compile Include="Metro\Native\DwmDropShadow.cs" />
     <Compile Include="Metro\Native\Monitor_Workarea.cs" />
-    <Compile Include="TitleBar.xaml.cs">
-      <DependentUpon>TitleBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -374,6 +371,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\SettingsModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ScrollbarStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -426,7 +427,10 @@
       <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
-    <Folder Include="Metro\Controls\MetroColourPicker\" />
+    <ProjectReference Include="..\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
+      <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
+      <Name>ICSharpCode.AvalonEdit</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Metro\Images\settings_logo.png" />
@@ -437,6 +441,7 @@
     <Resource Include="Metro\Images\Vectored\unfreezeVector.png" />
     <Content Include="Microsoft.Expression.Drawing.dll" />
     <Content Include="Microsoft.Expression.Interactions.dll" />
+    <Content Include="Resources\Icons\baseline-settings-20px.svg" />
     <Content Include="Resources\Icons\cancel-music.svg" />
     <Content Include="Resources\Icons\cancel.svg" />
     <Content Include="System.Windows.Interactivity.dll" />
@@ -444,6 +449,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Metro\Controls\MetroColourPicker\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
