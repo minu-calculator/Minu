@@ -8,6 +8,8 @@
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
         Title="Minu" Height="500" Width="800"
+        MinWidth="300"
+        MinHeight="200"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
@@ -35,12 +37,12 @@
                 </Border.BitmapEffect>
                 <Grid>
                     <local:TitleBar/>
-                    <ScrollViewer Margin="38 56 16 56">
+                    <ScrollViewer Margin="38 56 16 48">
                         <Grid Name="container">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" MinWidth="100" />
                                 <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="4*" Name="outputColumn" />
+                                <ColumnDefinition Width="4*" MinWidth="100" Name="outputColumn" />
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
                                 Background="Transparent" BorderThickness="0" Name="input"
@@ -55,7 +57,7 @@
                                 Background="#303030" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
                             <avalonEdit:TextEditor 
-                                Background="Transparent"
+                                Background="Transparent" MouseLeave="output_MouseMove"
                                 IsReadOnly="True" MouseMove="output_MouseMove"
                                 Grid.Column="2" Name="output" FontSize="16" 
                                 Margin="3 0 0 0" FontFamily="Consolas"  
@@ -63,7 +65,7 @@
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
-                    <Button HorizontalAlignment="Left" Margin="30,0,0,16" VerticalAlignment="Bottom" Width="15" Height="15" Background="Transparent" BorderThickness="0" Opacity=".25">
+                    <Button HorizontalAlignment="Left" Margin="30,0,0,16" VerticalAlignment="Bottom" Width="15" Height="15" Background="Transparent" BorderThickness="0">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Template">
