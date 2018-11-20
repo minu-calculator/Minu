@@ -54,7 +54,7 @@
                             <GridSplitter 
                                 Name="splitter" Grid.Column="1" Width="6"
                                 Padding="2" HorizontalAlignment="Center" 
-                                Background="#303030" BorderThickness="2" Visibility="Collapsed">
+                                Background="#2e2e2e" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
                             <avalonEdit:TextEditor 
                                 Background="Transparent" MouseLeave="output_MouseMove"

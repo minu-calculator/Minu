@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Media;
-using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Rendering;
-using org.mariuszgromada.math.mxparser;
-using Expression = org.mariuszgromada.math.mxparser.Expression;
 
 namespace Minu {
     /// <summary>
@@ -54,8 +46,7 @@ namespace Minu {
                 int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / baseLineHeight);
                 // One less '\n' on the first line
                 if (i == 0) bound--;
-                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i];
-                if (i != 0) outputText += "\u2002\u2001";
+                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
             }
             output.Text = outputText;
             selectionHelper?.InvalidateCache();
