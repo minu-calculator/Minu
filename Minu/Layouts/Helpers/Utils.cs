@@ -1,27 +1,21 @@
-﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Highlighting;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Xml;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 namespace Minu {
     class Utils {
-        static public void LoadHighlightRule(string resourseName, string ruleName) {
+        public static void LoadHighlightRule(string resourceName, string ruleName) {
             IHighlightingDefinition customHighlighting;
-            using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("Minu." + resourseName)) {
+            using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("Minu." + resourceName)) {
                 if (s == null)
                     throw new InvalidOperationException("Could not find embedded resource");
-                using (System.Xml.XmlReader reader = new System.Xml.XmlTextReader(s)) {
-                    customHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.
-                        HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                using (XmlReader reader = new XmlTextReader(s)) {
+                    customHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
                 }
             }
-            HighlightingManager.Instance.RegisterHighlighting(ruleName, new string[] { "." + ruleName }, customHighlighting);
+            HighlightingManager.Instance.RegisterHighlighting(ruleName, new[] { "." + ruleName }, customHighlighting);
         }
     }
 }
