@@ -11,12 +11,8 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
-        WindowStyle="None"
-        ResizeMode="CanResize"
-        Background="Transparent"
         FontFamily="Consolas"
         Loaded="Window_Loaded"
-        AllowsTransparency="True"
         SizeChanged="Window_SizeChanged">
     <WindowChrome.WindowChrome>
         <WindowChrome 
