@@ -17,8 +17,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        ResizeMode="CanResize"
-        SizeChanged="Window_SizeChanged">
+        ResizeMode="CanResize">
     <WindowChrome.WindowChrome>
         <WindowChrome 
             CaptionHeight="0"
@@ -59,8 +58,8 @@
                                 Background="Transparent"
                                 IsReadOnly="True" MouseMove="output_MouseMove"
                                 Grid.Column="2" Name="output" FontSize="16" 
-                                Margin="3 0 10 0" FontFamily="Consolas"  
-                                HorizontalScrollBarVisibility="Hidden"
+                                Margin="3 0 0 0" FontFamily="Consolas"  
+                                VerticalScrollBarVisibility="Disabled"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
