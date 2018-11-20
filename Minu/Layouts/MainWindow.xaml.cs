@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Controls;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -25,6 +28,17 @@ namespace Minu {
             selectionHelper.MouseMove(e);
         }
 
+        private void editor_PreviewMouseWheel(object sender, MouseWheelEventArgs e) {
+            if (!e.Handled) {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
+        }
+
         private void recalculate() {
             if (!input.TextArea.TextView.VisualLinesValid)
                 input.TextArea.TextView.EnsureVisualLines();
@@ -37,8 +51,7 @@ namespace Minu {
                 int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / baseLineHeight);
                 // One less '\n' on the first line
                 if (i == 0) bound--;
-                outputText += (bound > 0?new string('\n', bound):"") + resultList[i];
-                if (i != 0) outputText += "\u2002\u2001";
+                outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
             }
             output.Text = outputText;
             selectionHelper?.InvalidateCache();
