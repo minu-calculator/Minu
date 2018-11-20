@@ -47,10 +47,13 @@ namespace Minu {
             // If (1) anything is highlighted and (2) the current line is not to be highlighted,
             // remove the old highlight mark
             if (lastHighlightedLine != -1 && (lastHighlightedLine != lineNum || !validSelection)) {
-                output.TextArea.Document.Remove(visualLineInfoCache[lastHighlightedLine].Offset, 2);
+                var offset = visualLineInfoCache[lastHighlightedLine].Offset;
+                output.TextArea.Document.Remove(offset, 2);
                 lastHighlightedLine = -1;
+                if (lastClicked) // unclick if so
+                    output.TextArea.Document.Remove(offset, 1);
+                lastClicked = false;
             }
-
 
             if (!validSelection) return; // if nothing is selected, do nothing
 
@@ -60,7 +63,7 @@ namespace Minu {
             lastHighlightedLine = lineNum;
 
             bool nowClicked = ((MouseEventArgs)e).LeftButton == MouseButtonState.Pressed;
-
+            
             if (lastClicked && !nowClicked) // unclick
                 output.TextArea.Document.Remove(visualLine.Offset, 1);
             else if (!lastClicked && nowClicked) //click
