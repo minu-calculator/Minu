@@ -9,26 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Minu
-{
-    class Utils
-    {
-        // Returns an array that contains the number of lines visually presented
-        // in each input line after wrapping
-        static public int[] GetWrappedLineCount(TextEditor editor) {
-            var visualLineNum = new int[editor.LineCount];
-            for (int i = 0; i < editor.LineCount; i++) {
-                double bottom = 0;
-                double top = editor.TextArea.TextView.GetVisualTopByDocumentLine(i + 1);
-                if (i + 2 <= editor.LineCount)
-                    bottom = editor.TextArea.TextView.GetVisualTopByDocumentLine(i + 2);
-                else
-                    bottom = editor.TextArea.TextView.DocumentHeight;
-                visualLineNum[i] = (int)Math.Round((bottom - top) / editor.TextArea.TextView.DefaultLineHeight);
-            }
-            return visualLineNum;
-        }
-
+namespace Minu {
+    class Utils {
         static public void LoadHighlightRule(string resourseName, string ruleName) {
             IHighlightingDefinition customHighlighting;
             using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("Minu." + resourseName)) {
@@ -41,6 +23,5 @@ namespace Minu
             }
             HighlightingManager.Instance.RegisterHighlighting(ruleName, new string[] { "." + ruleName }, customHighlighting);
         }
-
     }
 }

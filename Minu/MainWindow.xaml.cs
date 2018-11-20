@@ -23,30 +23,21 @@ namespace Minu {
         public MainWindow() {
             InitializeComponent();
         }
-
-        private double measureLineHeight() {
-            string backup = input.Text;
-            input.Text = "\n";
-            double ret = input.TextArea.TextView.DocumentHeight -
-                input.TextArea.TextView.GetVisualTopByDocumentLine(input.LineCount);
-            input.Text = backup;
-            return ret;
-        }
-
+        
         private void output_MouseMove(object sender, EventArgs e) {
             selectionHelper.MouseMove();
         }
 
         private void recalculate() {
+            if (!input.TextArea.TextView.VisualLinesValid)
+                input.TextArea.TextView.EnsureVisualLines();
+
             var resultList = calculator.Calculate(input.Text);
 
-            // Calculate visual line count for every input line after wrapping
-            var visualLineNums = Utils.GetWrappedLineCount(input);
-            
             var outputText = "";
             for (int i = 0; i < resultList.Count; ++i) {
                 // Line up to input
-                int bound = visualLineNums[i];
+                int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / input.TextArea.TextView.DefaultLineHeight);
                 // One less '\n' on the first line
                 if (i == 0) bound--;
                 outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
