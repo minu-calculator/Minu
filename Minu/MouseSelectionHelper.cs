@@ -28,8 +28,10 @@ namespace Minu {
 
             if (lineNum <= 0 || lineNum > output.LineCount) {
                 if (lastHighlightedLine != -1) {
-                    output.TextArea.Document.Remove(visualLineInfoCache[lastHighlightedLine].Offset, 2);
+                    var offset = visualLineInfoCache[lastHighlightedLine].Offset;
+                    output.TextArea.Document.Remove(offset, 2 + (lastClicked ? 1 : 0));
                     lastHighlightedLine = -1;
+                    lastClicked = false;
                 }
                 return;
             }
@@ -48,10 +50,8 @@ namespace Minu {
             // remove the old highlight mark
             if (lastHighlightedLine != -1 && (lastHighlightedLine != lineNum || !validSelection)) {
                 var offset = visualLineInfoCache[lastHighlightedLine].Offset;
-                output.TextArea.Document.Remove(offset, 2);
+                output.TextArea.Document.Remove(offset, 2 + (lastClicked ? 1 : 0));
                 lastHighlightedLine = -1;
-                if (lastClicked) // unclick if so
-                    output.TextArea.Document.Remove(offset, 1);
                 lastClicked = false;
             }
 
@@ -59,11 +59,10 @@ namespace Minu {
 
             if (lineNum != lastHighlightedLine) // need to highlight
                 output.TextArea.Document.Insert(visualLine.Offset, "\u2000\u2000");
-
             lastHighlightedLine = lineNum;
 
             bool nowClicked = ((MouseEventArgs)e).LeftButton == MouseButtonState.Pressed;
-            
+
             if (lastClicked && !nowClicked) // unclick
                 output.TextArea.Document.Remove(visualLine.Offset, 1);
             else if (!lastClicked && nowClicked) //click
