@@ -24,7 +24,7 @@ namespace Minu {
 
             // Estimate the line number according to cursor position
             Point p = Mouse.GetPosition(output);
-            int lineNum = (int)Math.Ceiling(p.Y / output.TextArea.TextView.DefaultLineHeight);
+            int lineNum = (int)Math.Ceiling(p.Y / output.TextArea.TextView.Options.LineHeight);
 
             if (lineNum <= 0 || lineNum > output.LineCount) {
                 if (lastHighlightedLine != -1) {
@@ -35,6 +35,8 @@ namespace Minu {
                 }
                 return;
             }
+
+            if (output.TextArea.Document.GetLineByNumber(lineNum).Length == 0) return;
 
             // Rebuild cache if hasn't yet
             if (visualLineInfoCache.Count == 0) {

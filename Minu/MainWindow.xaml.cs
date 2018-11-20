@@ -12,6 +12,8 @@ namespace Minu {
     /// </summary>
     public partial class MainWindow : Window {
 
+        double baseLineHeight = 28;
+
         Calculator calculator = new Calculator();
         MouseSelectionHelper selectionHelper;
 
@@ -32,10 +34,11 @@ namespace Minu {
             var outputText = "";
             for (int i = 0; i < resultList.Count; ++i) {
                 // Line up to input
-                int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / input.TextArea.TextView.DefaultLineHeight);
+                int bound = (int)(input.TextArea.TextView.VisualLines[i].Height / baseLineHeight);
                 // One less '\n' on the first line
                 if (i == 0) bound--;
-                outputText += (bound > 0?new string('\n', bound):"") + resultList[i] + "\u2002\u2001";
+                outputText += (bound > 0?new string('\n', bound):"") + resultList[i];
+                if (i != 0) outputText += "\u2002\u2001";
             }
             output.Text = outputText;
             selectionHelper?.InvalidateCache();
@@ -65,7 +68,8 @@ namespace Minu {
             Utils.LoadHighlightRule("output.xshd", "output");
             input.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("minu");
             output.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("output");
-
+            input.TextArea.TextView.Options.LineHeight = baseLineHeight;
+            output.TextArea.TextView.Options.LineHeight = baseLineHeight;
             output.TextArea.TextView.Options.Alignment = TextAlignment.Right;
 
             selectionHelper = new MouseSelectionHelper(output);

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Vectors="clr-namespace:Minu.Resources"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
@@ -11,12 +12,12 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
-        WindowStyle="None"
-        ResizeMode="CanResize"
-        Background="Transparent"
         FontFamily="Consolas"
         Loaded="Window_Loaded"
-        AllowsTransparency="True">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize">
     <WindowChrome.WindowChrome>
         <WindowChrome 
             CaptionHeight="0"
@@ -34,7 +35,7 @@
                 </Border.BitmapEffect>
                 <Grid>
                     <local:TitleBar/>
-                    <ScrollViewer Margin="38 56 16 40">
+                    <ScrollViewer Margin="38 56 16 56">
                         <Grid Name="container">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5*" />
@@ -57,11 +58,36 @@
                                 Background="Transparent"
                                 IsReadOnly="True" MouseMove="output_MouseMove"
                                 Grid.Column="2" Name="output" FontSize="16" 
-                                Margin="3 0 10 0" FontFamily="Consolas"  
-                                HorizontalScrollBarVisibility="Hidden"
+                                Margin="3 0 0 0" FontFamily="Consolas"  
+                                VerticalScrollBarVisibility="Disabled"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
+                    <Button HorizontalAlignment="Left" Margin="30,0,0,16" VerticalAlignment="Bottom" Width="15" Height="15" Background="Transparent" BorderThickness="0" Opacity=".25">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Vectors:SettingsModule Width="15" Height="15"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Opacity" Value=".5"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Opacity" Value=".25"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Opacity" Value="1"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </Border>
         </Border>
