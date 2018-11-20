@@ -48,6 +48,7 @@
                                 Grid.Column="0" FontSize="16"
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True"
+                                SizeChanged="input_SizeChanged"
                                 TextChanged="textChangedEventHandler"/>
                             <GridSplitter 
                                 Name="splitter" Grid.Column="1" Width="6"

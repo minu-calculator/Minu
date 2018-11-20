@@ -60,10 +60,8 @@ namespace Minu {
 
         private void textChangedEventHandler(object sender, EventArgs args) {
             recalculate();
-            Console.WriteLine(output.TextArea.TextView.DefaultLineHeight);
         }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+        private void input_SizeChanged(object sender, SizeChangedEventArgs e) {
             recalculate();
         }
 
@@ -80,5 +78,6 @@ namespace Minu {
             // Debug
             input.Text = "sqrare_root(x)=sqrt(x)\nva = sqrare_root(2*6.21*3.77*10^5) \npr = .01*2*va\nvnew = pr/2\nta = va/6.21\ng = 9.8\nvland = tan(vnew^2+2*9.8*1.6*10^4)\nF = 2*vland/.5\ntl = (vland - vnew)/g \nF/.15*100000\ntpfff = (−.5*vland+ sqrare_root((0.5*vland)^2−4*. 5*g*−35))/2*.5*g\ntp = sin(35/(.5*g)) \n.5*vland*tp \nta+tl+tp+30+.5\nva\nvnew";
         }
+
     }
 }
