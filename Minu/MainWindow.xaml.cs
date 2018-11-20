@@ -20,13 +20,8 @@ namespace Minu {
         Calculator calculator = new Calculator();
         MouseSelectionHelper selectionHelper;
 
-        double baseLineHeight;
-
         public MainWindow() {
             InitializeComponent();
-
-            // Debug
-            input.Text = "sqrare_root(x)=sqrt(x)\nva = sqrare_root(2*6.21*3.77*10^5) \npr = .01*2*va\nvnew = pr/2\nta = va/6.21\ng = 9.8\nvland = tan(vnew^2+2*9.8*1.6*10^4)\nF = 2*vland/.5\ntl = (vland - vnew)/g \nF/.15*100000\ntpfff = (−.5*vland+ sqrare_root((0.5*vland)^2−4*. 5*g*−35))/2*.5*g\ntp = sin(35/(.5*g)) \n.5*vland*tp \nta+tl+tp+30+.5\nva\nvnew";
         }
 
         private double measureLineHeight() {
@@ -39,17 +34,15 @@ namespace Minu {
         }
 
         private void output_MouseMove(object sender, EventArgs e) {
-            selectionHelper.MouseMove(baseLineHeight);
+            selectionHelper.MouseMove();
         }
 
         private void recalculate() {
-            if (baseLineHeight == 0) return;
-
             var resultList = calculator.Calculate(input.Text);
 
             // Calculate visual line count for every input line after wrapping
-            var visualLineNums = Utils.GetWrappedLineCount(input, baseLineHeight);
-
+            var visualLineNums = Utils.GetWrappedLineCount(input);
+            
             var outputText = "";
             for (int i = 0; i < resultList.Count; ++i) {
                 // Line up to input
@@ -59,7 +52,7 @@ namespace Minu {
                 outputText += (bound > 0?(new string('\n', bound)):"") + resultList[i] + "\u2002\u2001";
             }
             output.Text = outputText;
-            selectionHelper.InvalidateCache();
+            selectionHelper?.InvalidateCache();
 
             // Show the splitter if necessary
             bool outputOverflowed = (outputColumn.ActualWidth - output.ActualWidth - output.Margin.Left - output.Margin.Right) <= 10;
@@ -76,6 +69,7 @@ namespace Minu {
 
         private void textChangedEventHandler(object sender, EventArgs args) {
             recalculate();
+            Console.WriteLine(output.TextArea.TextView.DefaultLineHeight);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
@@ -91,8 +85,9 @@ namespace Minu {
             output.TextArea.TextView.Options.Alignment = TextAlignment.Right;
 
             selectionHelper = new MouseSelectionHelper(output);
-            baseLineHeight = measureLineHeight();
-            recalculate();
+
+            // Debug
+            input.Text = "sqrare_root(x)=sqrt(x)\nva = sqrare_root(2*6.21*3.77*10^5) \npr = .01*2*va\nvnew = pr/2\nta = va/6.21\ng = 9.8\nvland = tan(vnew^2+2*9.8*1.6*10^4)\nF = 2*vland/.5\ntl = (vland - vnew)/g \nF/.15*100000\ntpfff = (−.5*vland+ sqrare_root((0.5*vland)^2−4*. 5*g*−35))/2*.5*g\ntp = sin(35/(.5*g)) \n.5*vland*tp \nta+tl+tp+30+.5\nva\nvnew";
         }
     }
 }

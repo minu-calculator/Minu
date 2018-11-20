@@ -18,13 +18,13 @@ namespace Minu {
             this.output = output;
         }
 
-        public void MouseMove(double baseLineHeight) {
+        public void MouseMove() {
 
             if (output.LineCount <= 0) return;
 
             // Estimate the line number according to cursor position
             Point p = Mouse.GetPosition(output);
-            int lineNum = (int)Math.Ceiling(p.Y / baseLineHeight);
+            int lineNum = (int)Math.Ceiling(p.Y / output.TextArea.TextView.DefaultLineHeight);
 
             if (lineNum <= 0 || lineNum > output.LineCount) {
                 if (lastHighlightedLine != -1) {

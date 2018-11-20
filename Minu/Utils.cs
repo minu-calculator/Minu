@@ -15,7 +15,7 @@ namespace Minu
     {
         // Returns an array that contains the number of lines visually presented
         // in each input line after wrapping
-        static public int[] GetWrappedLineCount(TextEditor editor, double baseLineHeight) {
+        static public int[] GetWrappedLineCount(TextEditor editor) {
             var visualLineNum = new int[editor.LineCount];
             for (int i = 0; i < editor.LineCount; i++) {
                 double bottom = 0;
@@ -24,7 +24,7 @@ namespace Minu
                     bottom = editor.TextArea.TextView.GetVisualTopByDocumentLine(i + 2);
                 else
                     bottom = editor.TextArea.TextView.DocumentHeight;
-                visualLineNum[i] = (int)Math.Round((bottom - top) / baseLineHeight);
+                visualLineNum[i] = (int)Math.Round((bottom - top) / editor.TextArea.TextView.DefaultLineHeight);
             }
             return visualLineNum;
         }
