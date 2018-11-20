@@ -13,13 +13,13 @@ namespace Minu {
         Dictionary<int, VisualLineInfo> visualLineInfoCache = new Dictionary<int, VisualLineInfo>();
         TextEditor output;
         int lastHighlightedLine = -1;
+        bool lastClicked = false;
 
         public MouseSelectionHelper(TextEditor output) {
             this.output = output;
         }
 
-        public void MouseMove() {
-
+        public void MouseMove(EventArgs e) {
             if (output.LineCount <= 0) return;
 
             // Estimate the line number according to cursor position
@@ -51,12 +51,22 @@ namespace Minu {
                 lastHighlightedLine = -1;
             }
 
-            if (lineNum == lastHighlightedLine) return; // if already selected, do nothing
+
             if (!validSelection) return; // if nothing is selected, do nothing
 
-            output.TextArea.Document.Insert(visualLine.Offset, "\u2000\u2000");
+            if (lineNum != lastHighlightedLine) // need to highlight
+                output.TextArea.Document.Insert(visualLine.Offset, "\u2000\u2000");
 
             lastHighlightedLine = lineNum;
+
+            bool nowClicked = ((MouseEventArgs)e).LeftButton == MouseButtonState.Pressed;
+
+            if (lastClicked && !nowClicked) // unclick
+                output.TextArea.Document.Remove(visualLine.Offset, 1);
+            else if (!lastClicked && nowClicked) //click
+                output.TextArea.Document.Insert(visualLine.Offset, "\u200B");
+
+            lastClicked = nowClicked;
         }
 
         public void InvalidateCache() {
