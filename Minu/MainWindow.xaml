@@ -48,7 +48,7 @@
                                 Background="Transparent" BorderThickness="0" Name="input"
                                 Grid.Column="0" FontSize="16"
                                 Foreground="#dde1e4" FontFamily="Consolas"
-                                WordWrap="True"
+                                WordWrap="True" PreviewMouseWheel="editor_PreviewMouseWheel"
                                 SizeChanged="input_SizeChanged"
                                 TextChanged="textChangedEventHandler"/>
                             <GridSplitter 
@@ -62,6 +62,7 @@
                                 Grid.Column="2" Name="output" FontSize="16" 
                                 Margin="3 0 0 0" FontFamily="Consolas"  
                                 VerticalScrollBarVisibility="Disabled"
+                                PreviewMouseWheel="editor_PreviewMouseWheel"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
