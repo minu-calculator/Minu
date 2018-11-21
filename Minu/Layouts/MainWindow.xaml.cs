@@ -69,8 +69,8 @@ namespace Minu {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            Utils.LoadHighlightRule("minu.xshd", "minu");
-            Utils.LoadHighlightRule("output.xshd", "output");
+            Utils.LoadHighlightRule("Resources.HighlightRules.minu.xshd", "minu");
+            Utils.LoadHighlightRule("Resources.HighlightRules.output.xshd", "output");
             input.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("minu");
             output.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("output");
             input.TextArea.TextView.Options.LineHeight = baseLineHeight;
