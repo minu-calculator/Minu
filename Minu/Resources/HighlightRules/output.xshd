@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="minu" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Hovered" foreground="#FFFFFF" background="Green" />
-  <Color name="Clicked" foreground="#FFFFFF" background="Red" />
+	<Color name="Hovered" foreground="#191a1d" background="#82cc0f" />
+  <Color name="Clicked" foreground="#191a1d" background="#6eb800" />
   
   <!-- This is the main ruleset. -->
   <RuleSet>
