@@ -4,7 +4,7 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
                       xmlns:local="clr-namespace:Minu"
-                      Title="Minu" Height="500" Width="800"
+                      Height="500" Width="800"
                       MinWidth="300" MinHeight="200"
                       TextElement.FontWeight="Regular"
                       TextElement.FontSize="13"
@@ -13,6 +13,11 @@
                       FontFamily="Consolas"
                       Background="#191a1d"
                       Loaded="Window_Loaded">
+
+    <controls:MetroWindow.WindowButtonCommands>
+        <controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+    </controls:MetroWindow.WindowButtonCommands>
+
     <Grid>
 
         <ScrollViewer Margin="38 56 16 48">
