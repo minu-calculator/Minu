@@ -118,7 +118,7 @@
     <Compile Include="Layouts\Components\TitleBar.xaml.cs">
       <DependentUpon>TitleBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layouts\Helpers\Utils.cs" />
+    <Compile Include="Layouts\Helpers\UIHelper.cs" />
     <Compile Include="Layouts\Helpers\VisualLineInfo.cs" />
     <Compile Include="Layouts\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>

@@ -31,21 +31,18 @@
                     Background="Transparent" BorderThickness="0" Name="input"
                     Grid.Column="0" FontSize="16"
                     Foreground="#dde1e4" FontFamily="Consolas"
-                    WordWrap="True" PreviewMouseWheel="editor_PreviewMouseWheel"
-                    SizeChanged="RecalculateHandler"
-                    TextChanged="RecalculateHandler"/>
+                    WordWrap="True"/>
                 <GridSplitter 
                     Name="splitter" Grid.Column="1" Width="6"
                     Padding="2" HorizontalAlignment="Center" 
                     Background="#2e2e2e" BorderThickness="2" Visibility="Collapsed">
                 </GridSplitter>
                 <avalonedit:TextEditor 
-                    Background="Transparent" MouseLeave="output_MouseMove"
-                    IsReadOnly="True" MouseMove="output_MouseMove"
+                    Background="Transparent"
+                    IsReadOnly="True"
                     Grid.Column="2" Name="output" FontSize="16" 
                     Margin="3 0 0 0" FontFamily="Consolas"  
                     VerticalScrollBarVisibility="Disabled"
-                    PreviewMouseWheel="editor_PreviewMouseWheel"
                     Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
             </Grid>
         </ScrollViewer>
