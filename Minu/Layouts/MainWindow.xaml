@@ -49,8 +49,8 @@
                                 Grid.Column="0" FontSize="16"
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True" PreviewMouseWheel="editor_PreviewMouseWheel"
-                                SizeChanged="input_SizeChanged"
-                                TextChanged="textChangedEventHandler"/>
+                                SizeChanged="RecalculateHandler"
+                                TextChanged="RecalculateHandler"/>
                             <GridSplitter 
                                 Name="splitter" Grid.Column="1" Width="6"
                                 Padding="2" HorizontalAlignment="Center" 

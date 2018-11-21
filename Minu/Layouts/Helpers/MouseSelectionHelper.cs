@@ -9,6 +9,18 @@ using System.Windows.Input;
 
 namespace Minu {
     class MouseSelectionHelper {
+        public class OnClickEventArg :EventArgs {
+            public string LineContent { get; }
+            public int LineNumber { get; }
+
+            public OnClickEventArg(string content, int number)
+            {
+                LineContent = content;
+                LineNumber = number;
+            }
+        }
+        public delegate void OnClickEventHandler(object sender, OnClickEventArg e);
+        public event OnClickEventHandler OnClickEvent;
 
         Dictionary<int, VisualLineInfo> visualLineInfoCache = new Dictionary<int, VisualLineInfo>();
         TextEditor output;
@@ -61,8 +73,12 @@ namespace Minu {
 
             if (lastClicked && !nowClicked) // unclick
                 output.TextArea.Document.Remove(visualLine.Offset, 1);
-            else if (!lastClicked && nowClicked) //click
+            else if (!lastClicked && nowClicked) { //click
                 output.TextArea.Document.Insert(visualLine.Offset, "\u200B");
+                OnClickEvent?.Invoke(this, new OnClickEventArg(
+                    output.TextArea.Document.GetText(visualLine.Offset, visualLine.Length),
+                    lineNum));
+            }
 
             lastClicked = nowClicked;
         }

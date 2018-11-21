@@ -5,8 +5,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using Minu.Backend;
-using Minu.Metro.Native;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
