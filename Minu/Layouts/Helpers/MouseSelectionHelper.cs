@@ -63,6 +63,8 @@ namespace Minu {
                 lastClicked = false;
             }
 
+            Mouse.OverrideCursor = validSelection ? Cursors.Hand : Cursors.Arrow;
+
             if (!validSelection) return; // if nothing is selected, do nothing
 
             if (lineNum != lastHighlightedLine) // need to highlight

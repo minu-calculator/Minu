@@ -10,6 +10,7 @@
         Title="Minu" Height="500" Width="800"
         MinWidth="300"
         MinHeight="200"
+        Icon="/Icon/png/minu_icon/minu_icon_128.png"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
@@ -59,14 +60,14 @@
                             <avalonEdit:TextEditor 
                                 Background="Transparent" MouseLeave="output_MouseMove"
                                 IsReadOnly="True" MouseMove="output_MouseMove"
-                                Grid.Column="2" Name="output" FontSize="16" 
+                                Grid.Column="2" Name="output" FontSize="16"
                                 Margin="3 0 0 0" FontFamily="Consolas"  
                                 VerticalScrollBarVisibility="Disabled"
                                 PreviewMouseWheel="editor_PreviewMouseWheel"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </ScrollViewer>
-                    <Button HorizontalAlignment="Left" Margin="30,0,0,16" VerticalAlignment="Bottom" Width="15" Height="15" Background="Transparent" BorderThickness="0">
+                    <Button HorizontalAlignment="Left" Margin="30,0,0,16" VerticalAlignment="Bottom" Width="15" Height="15" Background="Transparent" BorderThickness="0" Click="settings_Clicked">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Template">

@@ -130,6 +130,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Layouts\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layouts\Components\TitleBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,6 +184,9 @@
     <EmbeddedResource Include="Resources\HighlightRules\output.xshd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Icon\ai\minu_icon.ai" />
+    <None Include="Icon\ai\minu_icon_mini.ai" />
+    <None Include="Icon\ai\minu_icon_wide.ai" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -199,6 +209,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_1024.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_128.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_16.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_256.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_32.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_512.png" />
+    <Resource Include="Icon\png\minu_icon_mini\minu_icon_mini_64.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_1024.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_128.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_16.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_256.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_32.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_512.png" />
+    <Resource Include="Icon\png\minu_icon_wide\minu_icon_wide_64.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_1024.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_128.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_16.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_256.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_32.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_512.png" />
+    <Resource Include="Icon\png\minu_icon\minu_icon_64.png" />
     <Content Include="Resources\Icons\baseline-settings-20px.svg" />
     <Content Include="Resources\Icons\cancel-music.svg" />
     <Content Include="Resources\Icons\cancel.svg" />

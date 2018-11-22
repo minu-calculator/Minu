@@ -1,0 +1,15 @@
+﻿<Window x:Class="Minu.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        xmlns:local="clr-namespace:Minu"
+        mc:Ignorable="d"
+        Icon="/Icon/png/minu_icon/minu_icon_128.png"
+        Title="Options" Height="450" Width="500">
+    <Grid>
+        
+    </Grid>
+</Window>

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace Minu {
     /// <summary>
@@ -18,8 +19,15 @@ namespace Minu {
         public MainWindow() {
             InitializeComponent();
         }
+
+        private void settings_Clicked(object sender, RoutedEventArgs e) {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
+        }
         
-        private void output_MouseMove(object sender, EventArgs e) {
+        private void output_MouseMove(object sender, MouseEventArgs e) {
+            if(e.LeftButton==MouseButtonState.Pressed)
+                output.TextArea.Caret.Hide();
             selectionHelper.MouseMove(e);
         }
 
