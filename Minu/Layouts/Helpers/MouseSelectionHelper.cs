@@ -76,10 +76,10 @@ namespace Minu {
             if (lastClicked && !nowClicked) // unclick
                 output.TextArea.Document.Remove(visualLine.Offset, 1);
             else if (!lastClicked && nowClicked) { //click
-                output.TextArea.Document.Insert(visualLine.Offset, "\u200B");
                 OnClickEvent?.Invoke(this, new OnClickEventArg(
-                    output.TextArea.Document.GetText(visualLine.Offset, visualLine.Length),
+                    output.TextArea.Document.GetText(visualLine.Offset + 1, visualLine.Length - 1),
                     lineNum));
+                output.TextArea.Document.Insert(visualLine.Offset, "\u200B");
             }
 
             lastClicked = nowClicked;
