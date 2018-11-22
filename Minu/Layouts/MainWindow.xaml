@@ -47,7 +47,7 @@
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
                                 Background="Transparent" BorderThickness="0" Name="input"
-                                Grid.Column="0" FontSize="16"
+                                Grid.Column="0" FontSize="{Binding Source={StaticResource Settings}, Path=font_size}"
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True"/>
                             <GridSplitter 
@@ -56,9 +56,9 @@
                                 Background="#2e2e2e" BorderThickness="2" Visibility="Collapsed">
                             </GridSplitter>
                             <avalonEdit:TextEditor 
-                                Background="Transparent" MouseLeave="output_MouseMove"
-                                IsReadOnly="True" MouseMove="output_MouseMove"
-                                Grid.Column="2" Name="output" FontSize="16"
+                                Background="Transparent" 
+                                IsReadOnly="True" 
+                                Grid.Column="2" Name="output" FontSize="{Binding Source={StaticResource Settings}, Path=font_size}"
                                 Margin="3 0 0 0" FontFamily="Consolas"  
                                 VerticalScrollBarVisibility="Disabled"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>

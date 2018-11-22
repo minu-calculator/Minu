@@ -8,10 +8,15 @@
         xmlns:local="clr-namespace:Minu"
         mc:Ignorable="d"
         Icon="/Icon/png/minu_icon/minu_icon_128.png"
-        Title="Options" Height="450" Width="500">
+        Title="Options" Height="306" Width="273.143">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="28" Margin="141,70,0,0" TextWrapping="NoWrap" Text="10" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68"/>
-        <Label Content="Precision" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="77,70,0,0" VerticalAlignment="Top" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Height="28" Margin="109,45,0,0" TextWrapping="NoWrap" Text="10" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68"/>
+        <Label Content="Precision:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="46,45,0,0" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.481,3.403"/>
+        <CheckBox Content="Dark Mode" HorizontalAlignment="Left" Margin="109,95,0,0" VerticalAlignment="Top" Width="111" />
+        <CheckBox Content="Always on Top" HorizontalAlignment="Left" Margin="109,119,0,0" VerticalAlignment="Top" Width="111" />
+        <TextBox HorizontalAlignment="Left" Height="28" Margin="109,159,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=font_size}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68" />
+        <Label Content="Font Size:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="46,159,0,0" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.481,3.403"/>
+        <Button Content="Save &amp; Close" HorizontalAlignment="Left" Margin="46,223,0,0" VerticalAlignment="Top" Width="174" Click="close_Click"/>
 
     </Grid>
 </Window>

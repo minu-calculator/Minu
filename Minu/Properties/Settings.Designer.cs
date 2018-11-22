@@ -22,5 +22,53 @@ namespace Minu.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int precision {
+            get {
+                return ((int)(this["precision"]));
+            }
+            set {
+                this["precision"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool dark_mode {
+            get {
+                return ((bool)(this["dark_mode"]));
+            }
+            set {
+                this["dark_mode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool always_on_top {
+            get {
+                return ((bool)(this["always_on_top"]));
+            }
+            set {
+                this["always_on_top"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public string font_size {
+            get {
+                return ((string)(this["font_size"]));
+            }
+            set {
+                this["font_size"] = value;
+            }
+        }
     }
 }

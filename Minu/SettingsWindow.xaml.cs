@@ -20,5 +20,13 @@ namespace Minu {
         public SettingsWindow() {
             InitializeComponent();
         }
+
+        private void close_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void OnExit(object sender, ExitEventArgs e) {
+            Properties.Settings.Default.Save();
+        }
     }
 }
