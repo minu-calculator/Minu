@@ -10,6 +10,8 @@
         Icon="/Icon/png/minu_icon/minu_icon_128.png"
         Title="Options" Height="450" Width="500">
     <Grid>
-        
+        <TextBox HorizontalAlignment="Left" Height="28" Margin="141,70,0,0" TextWrapping="NoWrap" Text="10" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68"/>
+        <Label Content="Precision" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="77,70,0,0" VerticalAlignment="Top" Height="28"/>
+
     </Grid>
 </Window>
