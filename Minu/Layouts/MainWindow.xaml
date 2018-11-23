@@ -16,7 +16,6 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
         FontFamily="Consolas"
-        
         Loaded="Window_Loaded"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -47,8 +46,8 @@
                                 <ColumnDefinition Width="4*" MinWidth="100" Name="outputColumn" />
                             </Grid.ColumnDefinitions>
                             <avalonEdit:TextEditor
-                                Background="Transparent" BorderThickness="0" Name="input"
-                                Grid.Column="0" FontSize="{Binding Source={StaticResource Settings}, Path=font_size}"
+                                Background="Transparent" BorderThickness="0" Name="input" 
+                                Grid.Column="0" FontSize="{Binding Source={StaticResource Settings}, Path=Default.font_size}"
                                 Foreground="#dde1e4" FontFamily="Consolas"
                                 WordWrap="True"/>
                             <GridSplitter 
@@ -59,7 +58,7 @@
                             <avalonEdit:TextEditor 
                                 Background="Transparent" 
                                 IsReadOnly="True" 
-                                Grid.Column="2" Name="output" FontSize="{Binding Source={StaticResource Settings}, Path=font_size}"
+                                Grid.Column="2" Name="output" FontSize="{Binding Source={StaticResource Settings}, Path=Default.font_size}"
                                 Margin="3 0 0 0" FontFamily="Consolas"  
                                 VerticalScrollBarVisibility="Disabled"
                                 Foreground="#82cc0f" HorizontalAlignment="Stretch"/>

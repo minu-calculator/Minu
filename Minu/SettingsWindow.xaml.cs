@@ -26,7 +26,7 @@ namespace Minu {
         }
 
         private void OnExit(object sender, RoutedEventArgs e) {
-            Minu.Properties.Settings.Default.Save();
+            Properties.Settings.Default.Save();
             MainWindow mainWindow = Owner as MainWindow;
             mainWindow.reloadUI();
         }
