@@ -1,31 +1,39 @@
-﻿using org.mariuszgromada.math.mxparser;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using org.mariuszgromada.math.mxparser;
+using org.mariuszgromada.math.mxparser.parsertokens;
 
-namespace Minu {
+namespace Minu.Calculator {
     class Calculator {
-        
         public bool isInputOverflowed { get; private set; }
 
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
+        private CalculatorCacheSystem cacheSystem = new CalculatorCacheSystem();
 
-        public List<string> Calculate(string rawInput) {
+        public List<string> Calculate(string rawInput)
+        {
             IOutputFormatter outputFormatter = new DecFormatter();
 
             isInputOverflowed = false;
-            
+
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
-            
+
             var resultList = new List<string>();
             var arguments = new List<Argument>();
             var functions = new List<Function>();
             double ans = 0.0;
 
-            foreach (string inputLine in inputs) {
+            for (int lineNumber = 0; lineNumber < inputs.Length; ++lineNumber)
+            {
+                string inputLine = inputs[lineNumber];
                 string lineResult = "";
+                string definedToken = "";
 
-                if (inputLine.StartsWith("#")) { // comments + settings
+                if (inputLine.StartsWith("#"))
+                {
+                    // comments + settings
                     string trimed = inputLine.Substring(1).TrimStart().ToLower();
                     if (trimed.StartsWith("bin")) outputFormatter = new BinFormatter();
                     else if (trimed.StartsWith("oct")) outputFormatter = new OctFormatter();
@@ -33,41 +41,79 @@ namespace Minu {
                     else if (trimed.StartsWith("hex")) outputFormatter = new HexFormatter();
                     else if (trimed.StartsWith("sci")) outputFormatter = new SciFormatter();
                 }
-                else if (functionRegex.IsMatch(inputLine)) { // functions
-                    bool overrided = false;
+                else if (functionRegex.IsMatch(inputLine))
+                {
+                    // functions
                     Function func = new Function(inputLine);
                     func.addFunctions(functions.ToArray());
                     if (func.getFunctionName() != null) {
-                        if (functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0) // override occurred
-                            overrided = true;
+                        bool overrided = functions.RemoveAll(f => f.getFunctionName() == func.getFunctionName()) > 0;
                         functions.Add(func);
-                        //outputText += (overrided ? "(*) " : "") + func.getFunctionName();
+                        definedToken = func.getFunctionName();
+                        cacheSystem.InvalidateCache(func.getFunctionName());
                     }
                 }
-                else if (inputLine.Contains("=")) { // variables
-                    bool overrided = false;
-                    Argument arg = new Argument(inputLine, new Argument("ans", ans));
-                    arg.addArguments(arguments.ToArray());
-                    arg.addFunctions(functions.ToArray());
-                    if (arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0) // override occurred
-                        overrided = true;
+                else if (inputLine.Contains("="))
+                {
+                    // variables
+                    Argument arg;
+                    double res;
+                    if (cacheSystem.TryGetResult(inputLine, out var cache)) // try to get from cache first
+                    {
+                        arg = new Argument(cache.Name, cache.Result);
+                        lineResult = "[#] ";
+                    }
+                    else
+                    {
+                        arg = new Argument(inputLine, new Argument("ans", ans));
+                        arg.addArguments(arguments.ToArray());
+                        arg.addFunctions(functions.ToArray());
+                        cacheSystem.InvalidateCache(arg.getArgumentName());
+                        if (typeof(Argument).GetField("argumentExpression",
+                            BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(arg) is Expression expression)
+                            cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(),
+                                arg.getArgumentName(), arg.getArgumentValue());
+                        lineResult = "[*] ";
+                    }
+
+                    bool overrided = arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0;
                     arguments.Add(arg);
-                    //outputText += (overrided ? "(*) " : "") + arg.getArgumentName() + " = " +
-                    //outputFormatter.Format(arg.getArgumentValue());
-                    lineResult = arg.getArgumentValue().ToString();
+                    res = arg.getArgumentValue();
+                    definedToken = arg.getArgumentName();
+                    lineResult += outputFormatter.Format(res);
                 }
-                else if (inputLine != "") { // evaluate
-                    var expression = new Expression(inputLine, new Argument("ans", ans));
-                    expression.addArguments(arguments.ToArray());
-                    expression.addFunctions(functions.ToArray());
-                    var result = expression.calculate();
-                    if (!double.IsNaN(result)) {
-                        ans = result;
-                        lineResult = outputFormatter.Format(result);
+                else if (inputLine != "")
+                {
+                    // evaluate
+                    double result;
+                    if (!cacheSystem.TryGetResult(inputLine, out var cache)) {
+                        var expression = new Expression(inputLine, new Argument("ans", ans));
+                        expression.addArguments(arguments.ToArray());
+                        expression.addFunctions(functions.ToArray());
+                        result = expression.calculate();
+                        if(!double.IsNaN(result))
+                            cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(), null, result);
+                        lineResult = "[*] ";
                     }
+                    else
+                    {
+                        result = cache.Result;
+                        lineResult = "[#] ";
+                    }
+
+                    if (!double.IsNaN(result))
+                    {
+                        ans = result;
+                        lineResult += outputFormatter.Format(result);
+                    }
+
                 }
+
+                cacheSystem.InvalidateCache("ans");
+                cacheSystem.RegisterDefinedToken(lineNumber, definedToken);
                 resultList.Add(lineResult);
             }
+
             return resultList;
         }
     }

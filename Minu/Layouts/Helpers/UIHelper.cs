@@ -13,14 +13,14 @@ namespace Minu {
     class UIHelper {
         public TextEditor Input { get; }
         public TextEditor Output { get; }
-        public Calculator Calculator { get; }
+        public Calculator.Calculator Calculator { get; }
         public MouseSelectionHelper SelectionHelper { get; set; }
         public double BaseLineHeight { get; set; }
 
         private ColumnDefinition outputColumn { get; }
         private GridSplitter splitter { get; }
-
-        public UIHelper(Calculator calculator, TextEditor input, TextEditor output,
+        
+        public UIHelper(Calculator.Calculator calculator, TextEditor input, TextEditor output,
             ColumnDefinition outputColumn, GridSplitter splitter)
         {
             Calculator = calculator;

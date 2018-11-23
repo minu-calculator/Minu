@@ -27,14 +27,13 @@ namespace Minu {
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
-
+        
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             reloadUI();
         }
 
         public void reloadUI() {
-            helper = new UIHelper(new Calculator(), input, output, outputColumn, splitter);
-          //  UpdateLayout();
+            helper = new UIHelper(new Calculator.Calculator(), input, output, outputColumn, splitter);
         }
     }
 }
