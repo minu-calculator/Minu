@@ -110,6 +110,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Calculator\Calculator.cs" />
+    <Compile Include="Calculator\CalculatorCache.cs" />
     <Compile Include="Layouts\Helpers\MouseSelectionHelper.cs" />
     <Compile Include="Layouts\Output\OutputFormatters.cs" />
     <Compile Include="Resources\SettingsModule.xaml.cs">
