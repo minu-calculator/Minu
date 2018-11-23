@@ -16,6 +16,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"       
         FontFamily="Consolas"
+        
         Loaded="Window_Loaded"
         WindowStyle="None"
         AllowsTransparency="True"

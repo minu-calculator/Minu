@@ -17,8 +17,10 @@ namespace Minu {
             InitializeComponent();
         }
 
+
+
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            helper = new UIHelper(new Calculator(), input, output, outputColumn, splitter, 28);
+            helper = new UIHelper(new Calculator(), input, output, outputColumn, splitter);
         }
     }
 }

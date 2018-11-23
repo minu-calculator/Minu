@@ -21,12 +21,12 @@ namespace Minu {
         private GridSplitter splitter { get; }
 
         public UIHelper(Calculator calculator, TextEditor input, TextEditor output,
-            ColumnDefinition outputColumn, GridSplitter splitter, double baseLineHeight = 28)
+            ColumnDefinition outputColumn, GridSplitter splitter)
         {
             Calculator = calculator;
             Input = input;
             Output = output;
-            BaseLineHeight = baseLineHeight;
+            BaseLineHeight = Convert.ToInt32(Minu.Properties.Settings.Default.line_height);
             this.outputColumn = outputColumn;
             this.splitter = splitter;
 
@@ -59,7 +59,7 @@ namespace Minu {
             output.TextArea.MouseSelectionMode = ICSharpCode.AvalonEdit.Editing.MouseSelectionMode.None;
 
             // Debug
-            input.Text = "square_root(x)=sqrt(x)\n" +
+         /*   input.Text = "square_root(x)=sqrt(x)\n" +
                          "va = square_root(2*6.21*3.77*10^5) \n" +
                          "pr = .01*2*va\n" +
                          "vnew = pr/2\n" +
@@ -74,7 +74,7 @@ namespace Minu {
                          ".5*vland*tp \n" +
                          "ta+tl+tp+30+.5\n" +
                          "va\n" +
-                         "vnew";
+                         "vnew";*/
         }
 
         public void LoadHighlightRule(string resourceName, string ruleName) {

@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Minu.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="precision" Type="System.Int32" Scope="User">
+    <Setting Name="precision" Type="System.String" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="dark_mode" Type="System.Boolean" Scope="User">
@@ -12,7 +12,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="font_size" Type="System.String" Scope="User">
-      <Value Profile="(Default)">160</Value>
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="line_height" Type="System.String" Scope="User">
+      <Value Profile="(Default)">23</Value>
     </Setting>
   </Settings>
 </SettingsFile>
