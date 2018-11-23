@@ -34,6 +34,7 @@ namespace Minu {
 
         public void reloadUI() {
             helper = new UIHelper(new Calculator(), input, output, outputColumn, splitter);
+          //  UpdateLayout();
         }
     }
 }
