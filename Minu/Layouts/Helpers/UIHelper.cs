@@ -59,7 +59,7 @@ namespace Minu {
             output.TextArea.MouseSelectionMode = ICSharpCode.AvalonEdit.Editing.MouseSelectionMode.None;
 
             // Debug
-         /*   input.Text = "square_root(x)=sqrt(x)\n" +
+            input.Text = "square_root(x)=sqrt(x)\n" +
                          "va = square_root(2*6.21*3.77*10^5) \n" +
                          "pr = .01*2*va\n" +
                          "vnew = pr/2\n" +
@@ -69,12 +69,12 @@ namespace Minu {
                          "F = 2*vland/.5\n" +
                          "tl = (vland - vnew)/g \n" +
                          "F/.15*100000\n" +
-                         "tpfff = (−.5*vland+ square_root((0.5*vland)^2−4*. 5*g*−35))/2*.5*g\n" +
+                         "tpfff = (-.5*vland+ square_root((0.5*vland)^2-4*.5*g*-35))/2*.5*g\n" +
                          "tp = sin(35/(.5*g)) \n" +
                          ".5*vland*tp \n" +
                          "ta+tl+tp+30+.5\n" +
                          "va\n" +
-                         "vnew";*/
+                         "vnew";
         }
 
         public void LoadHighlightRule(string resourceName, string ruleName) {
