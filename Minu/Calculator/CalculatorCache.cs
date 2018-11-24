@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using org.mariuszgromada.math.mxparser;
 using org.mariuszgromada.math.mxparser.parsertokens;
 
-namespace Minu.Calculator
-{
+namespace Minu.Calculator {
     class CalculatorCacheSystem {
         public class Cache {
             public readonly string[] DependedTokens;
@@ -15,11 +14,10 @@ namespace Minu.Calculator
             public readonly double Result;
             public bool IsValid = true;
 
-            public Cache(List<Token> dependedTokens, string name, double result)
-            {
+            public Cache(List<Token> dependedTokens, string name, double result) {
                 DependedTokens = (from token in dependedTokens
-                    where token.tokenTypeId == Argument.TYPE_ID
-                    select token.tokenStr).ToArray();
+                                  where token.tokenTypeId == Argument.TYPE_ID
+                                  select token.tokenStr).ToArray();
                 Name = name;
                 Result = result;
             }
@@ -29,40 +27,32 @@ namespace Minu.Calculator
         private Dictionary<string, Cache> _caches = new Dictionary<string, Cache>();
         private Dictionary<int, string> _definedToken = new Dictionary<int, string>();
 
-        public CalculatorCacheSystem(int maximumCacheSize = 200)
-        {
+        public CalculatorCacheSystem(int maximumCacheSize = 200) {
             _maximumCacheSize = maximumCacheSize;
         }
 
-        public void GC()
-        {
+        public void GC() {
             var newCache = new Dictionary<string, Cache>();
             foreach (var c in _caches)
                 newCache[c.Key] = c.Value;
             _caches = newCache;
         }
 
-        public void SetCache(string expression, List<Token> dependedTokens, string name, double result)
-        {
+        public void SetCache(string expression, List<Token> dependedTokens, string name, double result) {
             if (name == null) return;
             _caches[expression] = new Cache(dependedTokens, name, result);
-            if(_caches.Count > _maximumCacheSize) GC();
+            if (_caches.Count > _maximumCacheSize) GC();
         }
 
-        public bool TryGetResult(string expression, out Cache result)
-        {
+        public bool TryGetResult(string expression, out Cache result) {
             return _caches.TryGetValue(expression, out result) && result.IsValid;
         }
 
-        public void InvalidateCache(string tokenName)
-        {
+        public void InvalidateCache(string tokenName) {
             if (tokenName == "") return;
-            foreach (var cache in _caches)
-            {
-                foreach (var token in cache.Value.DependedTokens)
-                {
-                    if (token == tokenName)
-                    {
+            foreach (var cache in _caches) {
+                foreach (var token in cache.Value.DependedTokens) {
+                    if (token == tokenName) {
                         cache.Value.IsValid = false;
                         break;
                     }
@@ -70,8 +60,7 @@ namespace Minu.Calculator
             }
         }
 
-        public void RegisterDefinedToken(int lineNumber, string tokenName)
-        {
+        public void RegisterDefinedToken(int lineNumber, string tokenName) {
             if (_definedToken.ContainsKey(lineNumber) &&
                 _definedToken[lineNumber] != tokenName)
                 InvalidateCache(_definedToken[lineNumber]); // Invalidate the old token.
