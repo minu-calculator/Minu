@@ -29,10 +29,11 @@ namespace Minu {
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            reloadUI();
+            ReloadUI();
         }
 
-        public void reloadUI() {
+        public void ReloadUI() {
+            helper?.Deactivative();
             helper = new UIHelper(new Calculator.Calculator(), input, output, outputColumn, splitter);
         }
     }

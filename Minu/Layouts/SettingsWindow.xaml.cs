@@ -25,10 +25,11 @@ namespace Minu {
 
         }
 
-        private void OnExit(object sender, RoutedEventArgs e) {
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
             Properties.Settings.Default.Save();
-            MainWindow mainWindow = Owner as MainWindow;
-            mainWindow.reloadUI();
+            if (Owner is MainWindow mainWindow)
+                mainWindow.ReloadUI();
         }
 
         private void lineHeight_TextChanged(object sender, TextChangedEventArgs e) {

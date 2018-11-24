@@ -31,13 +31,17 @@ namespace Minu {
             this.output = output;
         }
 
-        public void MouseMove(EventArgs e) {
+        public void MouseMove(object sender, MouseEventArgs e) {
+           doMouseMove(Mouse.GetPosition(output), e.LeftButton == MouseButtonState.Pressed);
+        }
+
+        private void doMouseMove(Point p, bool click)
+        {
             if (output.LineCount <= 0) return;
 
             EnsureCache();
 
             // Estimate the line number according to cursor position
-            Point p = Mouse.GetPosition(output);
             int lineNum = (int)Math.Ceiling(p.Y / output.TextArea.TextView.Options.LineHeight);
 
             if (lineNum <= 0 || lineNum > output.LineCount) {
@@ -71,7 +75,7 @@ namespace Minu {
                 output.TextArea.Document.Insert(visualLine.Offset, "\u2000");
             lastHighlightedLine = lineNum;
 
-            bool nowClicked = ((MouseEventArgs)e).LeftButton == MouseButtonState.Pressed;
+            bool nowClicked = click;
 
             if (lastClicked && !nowClicked) // unclick
                 output.TextArea.Document.Remove(visualLine.Offset, 1);
@@ -83,6 +87,11 @@ namespace Minu {
             }
 
             lastClicked = nowClicked;
+        }
+
+        public void ClearAllSelection()
+        {
+            doMouseMove(new Point(0, 0), false);
         }
 
         public void InvalidateCache() {
