@@ -16,12 +16,13 @@ namespace Minu {
         public TextEditor Output { get; }
         public Calculator.Calculator Calculator { get; }
         public MouseSelectionHelper SelectionHelper { get; set; }
-        public TooltipHelper TooltipHelper { get; set; }
         public double BaseLineHeight { get; set; }
 
         private Window window { get; }
         private ColumnDefinition outputColumn { get; }
         private GridSplitter splitter { get; }
+        private TooltipHelper tooltipHelper { get; }
+        private CompletionHelper completionHelper { get; }
 
         private void ReCalculateHandler(object s, EventArgs e) {
             ReCalculate();
@@ -34,6 +35,7 @@ namespace Minu {
 
         public UIHelper(Calculator.Calculator calculator, TextEditor input, TextEditor output,
             ColumnDefinition outputColumn, GridSplitter splitter, Window window) {
+
             Calculator = calculator;
             Input = input;
             Output = output;
@@ -57,15 +59,14 @@ namespace Minu {
                 Clipboard.SetText(arg.LineContent);
             };
 
-            TooltipHelper = new TooltipHelper(input, calculator, window);
+            tooltipHelper = new TooltipHelper(input, calculator, window);
+            completionHelper = new CompletionHelper(input);
 
             input.SizeChanged += ReCalculateHandler;
             input.TextChanged += ReCalculateHandler;
 
             input.PreviewMouseWheel += previewMouseWheel;
             output.PreviewMouseWheel += previewMouseWheel;
-            output.MouseMove += SelectionHelper.MouseMove;
-            output.MouseLeave += SelectionHelper.MouseMove;
 
             output.TextArea.SelectionChanged += SelectionChangedHandler;
             output.TextArea.MouseSelectionMode = ICSharpCode.AvalonEdit.Editing.MouseSelectionMode.None;
@@ -89,16 +90,16 @@ namespace Minu {
                          "vnew";
         }
 
-        public void Deactivative()
+        public void Deactivate()
         {
             Input.SizeChanged -= ReCalculateHandler;
             Input.TextChanged -= ReCalculateHandler;
             Input.PreviewMouseWheel -= previewMouseWheel;
             Output.PreviewMouseWheel -= previewMouseWheel;
-            Output.MouseMove -= SelectionHelper.MouseMove;
-            Output.MouseLeave -= SelectionHelper.MouseMove;
             Output.TextArea.SelectionChanged -= SelectionChangedHandler;
-            SelectionHelper.ClearAllSelection();
+            SelectionHelper.Deactivate();
+            tooltipHelper.Deactivate();
+            completionHelper.Deactivate();
         }
 
         private void LoadHighlightRule(string resourceName, string ruleName) {

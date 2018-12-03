@@ -111,6 +111,7 @@
     </ApplicationDefinition>
     <Compile Include="Calculator\Calculator.cs" />
     <Compile Include="Calculator\CalculatorCache.cs" />
+    <Compile Include="Layouts\Helpers\CompletionHelper.cs" />
     <Compile Include="Layouts\Helpers\MouseSelectionHelper.cs" />
     <Compile Include="Layouts\Helpers\TooltipHelper.cs" />
     <Compile Include="Layouts\Output\OutputFormatters.cs" />

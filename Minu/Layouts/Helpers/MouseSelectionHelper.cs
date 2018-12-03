@@ -29,6 +29,15 @@ namespace Minu {
 
         public MouseSelectionHelper(TextEditor output) {
             this.output = output;
+            output.MouseMove += MouseMove;
+            output.MouseLeave += MouseMove;
+        }
+
+        public void Deactivate()
+        {
+            output.MouseMove -= MouseMove;
+            output.MouseLeave -= MouseMove;
+            ClearAllSelection();
         }
 
         public void MouseMove(object sender, MouseEventArgs e) {

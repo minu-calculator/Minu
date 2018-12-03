@@ -22,9 +22,19 @@ namespace Minu.Layouts.Helpers {
             this.window = window;
             editor.MouseHover += TextEditorMouseHover;
             editor.MouseHoverStopped += TextEditorMouseHoverStopped;
-            editor.MouseEnter += (s,e) => Mouse.OverrideCursor = Cursors.IBeam;
+            editor.MouseEnter += TextEditorMouseEnter;
+        }
+        
+        public void Deactivate()
+        {
+            editor.MouseHover -= TextEditorMouseHover;
+            editor.MouseHoverStopped -= TextEditorMouseHoverStopped;
+            editor.MouseEnter -= TextEditorMouseEnter;
         }
 
+        void TextEditorMouseEnter(object sender, MouseEventArgs e) {
+            Mouse.OverrideCursor = Cursors.IBeam;
+        }
         void TextEditorMouseHover(object sender, MouseEventArgs e) {
             bool isValidWordPart(char c)
             {
