@@ -34,7 +34,7 @@ namespace Minu {
 
         public void ReloadUI() {
             helper?.Deactivative();
-            helper = new UIHelper(new Calculator.Calculator(), input, output, outputColumn, splitter);
+            helper = new UIHelper(new Calculator.Calculator(), input, output, outputColumn, splitter, this);
         }
     }
 }

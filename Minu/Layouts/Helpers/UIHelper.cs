@@ -8,6 +8,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MahApps.Metro.Controls;
+using Minu.Layouts.Helpers;
 
 namespace Minu {
     class UIHelper {
@@ -15,8 +16,10 @@ namespace Minu {
         public TextEditor Output { get; }
         public Calculator.Calculator Calculator { get; }
         public MouseSelectionHelper SelectionHelper { get; set; }
+        public TooltipHelper TooltipHelper { get; set; }
         public double BaseLineHeight { get; set; }
 
+        private Window window { get; }
         private ColumnDefinition outputColumn { get; }
         private GridSplitter splitter { get; }
 
@@ -30,13 +33,14 @@ namespace Minu {
         }
 
         public UIHelper(Calculator.Calculator calculator, TextEditor input, TextEditor output,
-            ColumnDefinition outputColumn, GridSplitter splitter) {
+            ColumnDefinition outputColumn, GridSplitter splitter, Window window) {
             Calculator = calculator;
             Input = input;
             Output = output;
             BaseLineHeight = Convert.ToInt32(Properties.Settings.Default.line_height);
             this.outputColumn = outputColumn;
             this.splitter = splitter;
+            this.window = window;
 
             LoadHighlightRule("Resources.HighlightRules.minu.xshd", "minu");
             LoadHighlightRule("Resources.HighlightRules.output.xshd", "output");
@@ -52,6 +56,8 @@ namespace Minu {
             SelectionHelper.OnClickEvent += (s, arg) => {
                 Clipboard.SetText(arg.LineContent);
             };
+
+            TooltipHelper = new TooltipHelper(input, calculator, window);
 
             input.SizeChanged += ReCalculateHandler;
             input.TextChanged += ReCalculateHandler;
