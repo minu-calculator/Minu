@@ -75,11 +75,19 @@ namespace Minu.Calculator {
                         arg = new Argument(inputLine, new Argument("ans", ans));
                         arg.addArguments(arguments.ToArray());
                         arg.addFunctions(functions.ToArray());
-                        cacheSystem.InvalidateCache(arg.getArgumentName());
-                        if (typeof(Argument).GetField("argumentExpression",
-                            BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(arg) is Expression expression)
-                            cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(),
-                                arg.getArgumentName(), arg.getArgumentValue());
+
+                        var argName = arg.getArgumentName();
+                        cacheSystem.InvalidateCache(argName);
+
+                        if (argName != null) // arg.argumentExpression.initialTokens
+                            if (typeof(Argument).GetField("argumentExpression",
+                                    BindingFlags.Instance | BindingFlags.NonPublic)
+                                ?.GetValue(arg) is Expression expression)
+                                if (typeof(Expression).GetField("initialTokens",
+                                        BindingFlags.Instance | BindingFlags.NonPublic)
+                                    ?.GetValue(expression) is List<Token> tks)
+                                    cacheSystem.SetCache(inputLine, tks, argName, arg.getArgumentValue());
+                        
                         lineResult = "[*] ";
                     }
 
@@ -87,7 +95,8 @@ namespace Minu.Calculator {
                     arguments.Add(arg);
                     res = arg.getArgumentValue();
                     definedToken = arg.getArgumentName();
-                    lastCalculatedVariableValues[definedToken] = res;
+                    if(definedToken!=null)
+                        lastCalculatedVariableValues[definedToken] = res;
                     lineResult += outputFormatter.Format(res);
                 }
                 else if (inputLine != "")

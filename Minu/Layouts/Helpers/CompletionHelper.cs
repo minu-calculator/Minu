@@ -33,22 +33,21 @@ namespace Minu.Layouts.Helpers
                 textArea.Document.Replace(completionSegment, Text);
             }
         }
-
-
+        
         readonly TextEditor _editor;
         CompletionWindow _completionWindow;
 
         public CompletionHelper(TextEditor editor)
         {
             _editor = editor;
-            //_editor.TextArea.TextEntering += TextEntering;
-            //_editor.TextArea.TextEntered += TextEntered;
+            _editor.TextArea.TextEntering += TextEntering;
+            _editor.TextArea.TextEntered += TextEntered;
         }
 
         public void Deactivate()
         {
-            //_editor.TextArea.TextEntering -= TextEntering;
-            //_editor.TextArea.TextEntered -= TextEntered;
+            _editor.TextArea.TextEntering -= TextEntering;
+            _editor.TextArea.TextEntered -= TextEntered;
         }
 
         void TextEntered(object sender, TextCompositionEventArgs e)

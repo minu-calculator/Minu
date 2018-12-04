@@ -60,7 +60,7 @@ namespace Minu {
             };
 
             tooltipHelper = new TooltipHelper(input, calculator, window);
-            completionHelper = new CompletionHelper(input);
+            //completionHelper = new CompletionHelper(input);
 
             input.SizeChanged += ReCalculateHandler;
             input.TextChanged += ReCalculateHandler;
@@ -99,7 +99,7 @@ namespace Minu {
             Output.TextArea.SelectionChanged -= SelectionChangedHandler;
             SelectionHelper.Deactivate();
             tooltipHelper.Deactivate();
-            completionHelper.Deactivate();
+            completionHelper?.Deactivate();
         }
 
         private void LoadHighlightRule(string resourceName, string ruleName) {
