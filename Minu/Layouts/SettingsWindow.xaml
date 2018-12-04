@@ -9,17 +9,19 @@
         mc:Ignorable="d"
         Unloaded="OnExit"
         Icon="/Icon/png/minu_icon/minu_icon_128.png"
-        Title="Options" Height="294.572" Width="329.143">
+        Title="Options" Height="294.572" Width="434.343">
     <Grid>
         <Label Name="PrecisionDemo" Content="pi" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="192,45,0,0" VerticalAlignment="Top" Height="28" Width="94"/>
         <TextBox TextChanged="Precision_OnTextChanged" HorizontalAlignment="Left" Height="28" Margin="119,45,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=Default.precision}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68"/>
         <Label Content="Precision:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="20,45,0,0" VerticalAlignment="Top" Height="28" HorizontalContentAlignment="Right" RenderTransformOrigin="0.481,3.403" Width="94"/>
         <CheckBox Content="Dark Mode" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.dark_mode}" HorizontalAlignment="Left" Margin="119,95,0,0" VerticalAlignment="Top" Width="111" />
         <CheckBox Content="Always on Top" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.always_on_top}" HorizontalAlignment="Left" Margin="119,119,0,0" VerticalAlignment="Top" Width="111" />
-        <TextBox HorizontalAlignment="Left" Height="28" Margin="119,159,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=Default.font_size}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68" />
-        <Label Content="Font Size:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="20,159,0,0" 
+        <CheckBox Content="Use Mac-style Window (Restart to take effect)" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.mac_style}" HorizontalAlignment="Left" Margin="119,140,0,0" VerticalAlignment="Top" Width="276" />
+
+        <TextBox HorizontalAlignment="Left" Height="28" Margin="119,170,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=Default.font_size}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68" />
+        <Label Content="Font Size:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="20,170,0,0" 
                HorizontalContentAlignment="Right" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.481,3.403" Width="94"/>
-        <TextBox HorizontalAlignment="Left" Height="28" Margin="119,192,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=Default.line_height}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68" TextChanged="lineHeight_TextChanged" />
-        <Label Content="Line Height:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="20,192,0,0" VerticalAlignment="Top" Height="28" HorizontalContentAlignment="Right" RenderTransformOrigin="0.481,3.403" Width="94"/>
+        <TextBox HorizontalAlignment="Left" Height="28" Margin="119,203,0,0" TextWrapping="NoWrap" Text="{Binding Source={StaticResource Settings}, Path=Default.line_height}" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="68" TextChanged="lineHeight_TextChanged" />
+        <Label Content="Line Height:" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="20,203,0,0" VerticalAlignment="Top" Height="28" HorizontalContentAlignment="Right" RenderTransformOrigin="0.481,3.403" Width="94"/>
     </Grid>
 </Window>

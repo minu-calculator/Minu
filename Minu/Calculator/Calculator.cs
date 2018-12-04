@@ -68,7 +68,7 @@ namespace Minu.Calculator {
                     if (cacheSystem.TryGetResult(inputLine, out var cache)) // try to get from cache first
                     {
                         arg = new Argument(cache.Name, cache.Result);
-                        lineResult = "[#] ";
+                        //lineResult = "[#] ";
                     }
                     else
                     {
@@ -88,7 +88,7 @@ namespace Minu.Calculator {
                                     ?.GetValue(expression) is List<Token> tks)
                                     cacheSystem.SetCache(inputLine, tks, argName, arg.getArgumentValue());
                         
-                        lineResult = "[*] ";
+                        //lineResult = "[*] ";
                     }
 
                     bool overrided = arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0;
@@ -110,12 +110,12 @@ namespace Minu.Calculator {
                         result = expression.calculate();
                         if(!double.IsNaN(result))
                             cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(), null, result);
-                        lineResult = "[*] ";
+                        //lineResult = "[*] ";
                     }
                     else
                     {
                         result = cache.Result;
-                        lineResult = "[#] ";
+                        //lineResult = "[#] ";
                     }
 
                     if (!double.IsNaN(result))
