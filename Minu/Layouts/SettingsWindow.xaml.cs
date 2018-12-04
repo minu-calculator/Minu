@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Minu.Properties;
 
 namespace Minu {
     /// <summary>
@@ -21,18 +22,21 @@ namespace Minu {
             InitializeComponent();
         }
 
-        private void close_Click(object sender, RoutedEventArgs e) {
-
-        }
-
         private void OnExit(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
             if (Owner is MainWindow mainWindow)
                 mainWindow.ReloadUI();
+            if (Owner is Home homeWindow)
+                homeWindow.ReloadUI();
         }
 
         private void lineHeight_TextChanged(object sender, TextChangedEventArgs e) {
+        }
+
+        private void Precision_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            PrecisionDemo.Content = Math.PI.ToString("G" + ((TextBox)sender).Text);
         }
     }
 }

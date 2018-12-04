@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Minu"
              xmlns:properties="clr-namespace:Minu.Properties"
-             StartupUri="Layouts/MainWindow.xaml">
+             StartupUri="Layouts/Home.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <properties:Settings x:Key="Settings" />

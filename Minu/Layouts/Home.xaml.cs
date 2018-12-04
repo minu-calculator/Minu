@@ -17,7 +17,18 @@ namespace Minu {
             InitializeComponent();
         }
 
+        private void settings_Clicked(object sender, RoutedEventArgs e) {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Owner = this;
+            settingsWindow.ShowDialog();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e) {
+            ReloadUI();
+        }
+
+        public void ReloadUI() {
+            helper?.Deactivate();
             helper = new UIHelper(new Calculator.Calculator(), input, output, outputColumn, splitter, this);
         }
     }
