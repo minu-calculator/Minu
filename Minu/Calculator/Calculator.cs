@@ -11,19 +11,17 @@ namespace Minu.Calculator {
 
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
         private CalculatorCacheSystem cacheSystem = new CalculatorCacheSystem();
-        private Dictionary<string, double> lastCalculatedVariableValues = new Dictionary<string, double>();
 
-        public bool GetVariableValue(string token, out double value)
-        {
-            return lastCalculatedVariableValues.TryGetValue(token, out value);
-        }
+        public Dictionary<string, double> Variables { get; } = new Dictionary<string, double>();
+        public Dictionary<string, string> Functions { get; } = new Dictionary<string, string>();
 
         public List<string> Calculate(string rawInput)
         {
             IOutputFormatter outputFormatter = new DecFormatter();
 
             isInputOverflowed = false;
-            lastCalculatedVariableValues.Clear();
+            Variables.Clear();
+            Functions.Clear();
 
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
@@ -58,6 +56,7 @@ namespace Minu.Calculator {
                         functions.Add(func);
                         definedToken = func.getFunctionName();
                         cacheSystem.InvalidateCache(func.getFunctionName());
+                        Functions[definedToken] = inputLine.Substring(0, inputLine.IndexOf('='));
                     }
                 }
                 else if (inputLine.Contains("="))
@@ -96,7 +95,7 @@ namespace Minu.Calculator {
                     res = arg.getArgumentValue();
                     definedToken = arg.getArgumentName();
                     if(definedToken!=null)
-                        lastCalculatedVariableValues[definedToken] = res;
+                        Variables[definedToken] = res;
                     lineResult += outputFormatter.Format(res);
                 }
                 else if (inputLine != "")

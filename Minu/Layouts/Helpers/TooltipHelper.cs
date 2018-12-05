@@ -36,10 +36,7 @@ namespace Minu.Layouts.Helpers {
             Mouse.OverrideCursor = Cursors.IBeam;
         }
         void TextEditorMouseHover(object sender, MouseEventArgs e) {
-            bool isValidWordPart(char c)
-            {
-                return char.IsLetterOrDigit(c) || c == '_';
-            }
+            bool IsValidWordPart(char c) => char.IsLetterOrDigit(c) || c == '_';
 
             var pos = editor.GetPositionFromPoint(e.GetPosition(editor));
             if (pos == null) return;
@@ -47,13 +44,13 @@ namespace Minu.Layouts.Helpers {
             var line = editor.Document.GetText(editor.Document.GetLineByNumber(pos.Value.Line));
             int start = pos.Value.VisualColumn, end = pos.Value.VisualColumn;
 
-            if (start < 0 || end >= line.Length || !isValidWordPart(line[start])) return;
+            if (start < 0 || end >= line.Length || !IsValidWordPart(line[start])) return;
 
-            while (start - 1 >= 0 && isValidWordPart(line[start - 1])) start--;
-            while (end + 1 < line.Length && isValidWordPart(line[end + 1])) end++;
+            while (start - 1 >= 0 && IsValidWordPart(line[start - 1])) start--;
+            while (end + 1 < line.Length && IsValidWordPart(line[end + 1])) end++;
             var token = line.Substring(start, end - start + 1);
 
-            if (calculator.GetVariableValue(token, out var value))
+            if (calculator.Variables.TryGetValue(token, out var value))
             {
                 toolTip.PlacementTarget = window; // required for property inheritance
                 toolTip.Content = value;

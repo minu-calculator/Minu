@@ -24,9 +24,7 @@ namespace Minu {
         private TooltipHelper tooltipHelper { get; }
         private CompletionHelper completionHelper { get; }
 
-        private void ReCalculateHandler(object s, EventArgs e) {
-            ReCalculate();
-        }
+        private void ReCalculateHandler(object s, EventArgs e) => ReCalculate();
 
         private void SelectionChangedHandler(object s, EventArgs e) {
             Output.TextArea.ClearSelection();
@@ -60,7 +58,7 @@ namespace Minu {
             };
 
             tooltipHelper = new TooltipHelper(input, calculator, window);
-            //completionHelper = new CompletionHelper(input);
+            completionHelper = new CompletionHelper(input, calculator);
 
             input.SizeChanged += ReCalculateHandler;
             input.TextChanged += ReCalculateHandler;
