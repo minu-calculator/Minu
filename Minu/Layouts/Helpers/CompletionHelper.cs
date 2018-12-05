@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Converters;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
-using org.mariuszgromada.math.mxparser;
 using org.mariuszgromada.math.mxparser.parsertokens;
+using Expression = org.mariuszgromada.math.mxparser.Expression;
 
 namespace Minu.Layouts.Helpers
 {
@@ -46,19 +48,30 @@ namespace Minu.Layouts.Helpers
         private bool _toggled = false;
         // name: description
         private static readonly Dictionary<string, string> _constantsDictionary;
-
+        private static readonly Dictionary<string, string> _keywordsDictionary;
+        
         static CompletionHelper()
         {
             _constantsDictionary = new Dictionary<string, string>();
-            var idFilter = new[]
+            _keywordsDictionary = new Dictionary<string, string>();
+            var constantFilter = new[]
             {
                 ConstantValue.TYPE_ID, Unit.TYPE_ID, RandomVariable.TYPE_ID
             };
+            var keywordFilterExclude = new[]
+            {
+                ConstantValue.TYPE_ID, Unit.TYPE_ID, RandomVariable.TYPE_ID,
+                Operator.TYPE_ID, BooleanOperator.TYPE_ID, BinaryRelation.TYPE_ID,
+                BitwiseOperator.TYPE_ID,ParserSymbol.TYPE_ID, ParserSymbol.NUMBER_TYPE_ID
+            };
             foreach (var item in new Expression().getKeyWords())
             {
-                if (idFilter.Contains(item.wordTypeId))
-                    _constantsDictionary[item.wordString] = item.description
-                                                            + " (" + new Expression(item.wordString).calculate() + ")";
+                if (constantFilter.Contains(item.wordTypeId))
+                    _constantsDictionary[item.wordString] =
+                        item.description + " (" + new Expression(item.wordString).calculate() + ")";
+
+                if (!keywordFilterExclude.Contains(item.wordTypeId))
+                    _keywordsDictionary[item.wordString] = item.syntax + " " + item.description;
             }
         }
 
@@ -131,6 +144,9 @@ namespace Minu.Layouts.Helpers
 
                 foreach (var func in _calculator.Functions)
                     data.Add(new CompletionData(func.Key, "(user-defined) " + func.Value, 1));
+
+                foreach (var keyword in _keywordsDictionary)
+                    data.Add(new CompletionData(keyword.Key, keyword.Value, 2));
             }
             else
             {
