@@ -107,49 +107,38 @@ namespace Minu.Layouts.Helpers
                 return;
             }
 
-            var token = GetTokenBefore(_editor.Document, _editor.CaretOffset, out var isConstant).ToLower();
-            if (_completionWindow == null) // initialize the completion window
+            if (_completionWindow != null) return;
+
+            // initialize the completion window
+            GetTokenBefore(_editor.Document, _editor.CaretOffset, out var isConstant);
+
+            _completionWindow = new CompletionWindow(_editor.TextArea)
             {
-                _completionWindow = new CompletionWindow(_editor.TextArea)
-                {
-                    CloseWhenCaretAtBeginning = !isConstant
-                };
-                _completionWindow.CompletionList.IsFiltering = !isConstant;
-                _completionWindow.Show();
-                _completionWindow.Closed += delegate
-                {
-                    _completionWindow = null;
-                    _toggled = false;
-                };
-            }
+                CloseWhenCaretAtBeginning = !isConstant
+            };
+
+            _completionWindow.Closed += delegate
+            {
+                _completionWindow = null;
+                _toggled = false;
+            };
 
             var data = _completionWindow.CompletionList.CompletionData;
             if (!isConstant)
             {
-                if (data.Count == 0) { // only initialize only
-                    foreach (var variable in _calculator.Variables)
-                        data.Add(new CompletionData(variable.Key, "(user-defined) " + variable.Value, 1));
+                foreach (var variable in _calculator.Variables)
+                    data.Add(new CompletionData(variable.Key, "(user-defined) " + variable.Value, 1));
 
-                    foreach (var func in _calculator.Functions)
-                        data.Add(new CompletionData(func.Key, "(user-defined) " + func.Value, 1));
-                }
+                foreach (var func in _calculator.Functions)
+                    data.Add(new CompletionData(func.Key, "(user-defined) " + func.Value, 1));
             }
-            else {
-                data.Clear();
+            else
+            {
                 foreach (var constant in _constantsDictionary)
-                {
-                    var name = constant.Key;
-                    var description = constant.Value;
-                    if (constant.Key.ToLower().StartsWith("[" + token))
-                        data.Add(new CompletionData(name, description, 1));
-                    else if (constant.Key.ToLower().Contains(token))
-                        data.Add(new CompletionData(name, description, 2));
-                    else if (constant.Value.ToLower().StartsWith(token))
-                        data.Add(new CompletionData(name, description, 3));
-                    else if (constant.Value.ToLower().Contains(token))
-                        data.Add(new CompletionData(name, description, 4));
-                }
+                    data.Add(new CompletionData(constant.Key, constant.Value, 1));
             }
+
+            _completionWindow.Show();
         }
 
         void TextEntered(object sender, TextCompositionEventArgs e)
