@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="minu" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Comment" foreground="#61616a" />
-	<Color name="Function" foreground="Green" />
+	<Color name="Function" foreground="#ab47bc" />
   <Color name="Variable" foreground="#60b8eb" />
-  <Color name="Keyword" foreground="Orange" />
-  <Color name="Constant" foreground="Yellow" />
+  <Color name="Keyword" foreground="#f06292" />
+  <Color name="Constant" foreground="#ffb300" />
   
   <!-- This is the main ruleset. -->
   <RuleSet>
