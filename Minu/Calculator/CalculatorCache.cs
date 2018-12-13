@@ -39,7 +39,6 @@ namespace Minu.Calculator {
         }
 
         public void SetCache(string expression, List<Token> dependedTokens, string name, double result) {
-            if (name == null) return;
             _caches[expression] = new Cache(dependedTokens, name, result);
             if (_caches.Count > _maximumCacheSize) GC();
         }

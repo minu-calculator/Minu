@@ -8,6 +8,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MahApps.Metro.Controls;
+using Minu.Layouts.Helpers;
 
 namespace Minu {
     class UIHelper {
@@ -17,12 +18,13 @@ namespace Minu {
         public MouseSelectionHelper SelectionHelper { get; set; }
         public double BaseLineHeight { get; set; }
 
+        private Window window { get; }
         private ColumnDefinition outputColumn { get; }
         private GridSplitter splitter { get; }
+        private TooltipHelper tooltipHelper { get; }
+        private CompletionHelper completionHelper { get; }
 
-        private void ReCalculateHandler(object s, EventArgs e) {
-            ReCalculate();
-        }
+        private void ReCalculateHandler(object s, EventArgs e) => ReCalculate();
 
         private void SelectionChangedHandler(object s, EventArgs e) {
             Output.TextArea.ClearSelection();
@@ -30,13 +32,15 @@ namespace Minu {
         }
 
         public UIHelper(Calculator.Calculator calculator, TextEditor input, TextEditor output,
-            ColumnDefinition outputColumn, GridSplitter splitter) {
+            ColumnDefinition outputColumn, GridSplitter splitter, Window window) {
+
             Calculator = calculator;
             Input = input;
             Output = output;
             BaseLineHeight = Convert.ToInt32(Properties.Settings.Default.line_height);
             this.outputColumn = outputColumn;
             this.splitter = splitter;
+            this.window = window;
 
             LoadHighlightRule("Resources.HighlightRules.minu.xshd", "minu");
             LoadHighlightRule("Resources.HighlightRules.output.xshd", "output");
@@ -53,13 +57,14 @@ namespace Minu {
                 Clipboard.SetText(arg.LineContent);
             };
 
+            tooltipHelper = new TooltipHelper(input, calculator, window);
+            completionHelper = new CompletionHelper(input, calculator);
+
             input.SizeChanged += ReCalculateHandler;
             input.TextChanged += ReCalculateHandler;
 
             input.PreviewMouseWheel += previewMouseWheel;
             output.PreviewMouseWheel += previewMouseWheel;
-            output.MouseMove += SelectionHelper.MouseMove;
-            output.MouseLeave += SelectionHelper.MouseMove;
 
             output.TextArea.SelectionChanged += SelectionChangedHandler;
             output.TextArea.MouseSelectionMode = ICSharpCode.AvalonEdit.Editing.MouseSelectionMode.None;
@@ -83,16 +88,16 @@ namespace Minu {
                          "vnew";
         }
 
-        public void Deactivative()
+        public void Deactivate()
         {
             Input.SizeChanged -= ReCalculateHandler;
             Input.TextChanged -= ReCalculateHandler;
             Input.PreviewMouseWheel -= previewMouseWheel;
             Output.PreviewMouseWheel -= previewMouseWheel;
-            Output.MouseMove -= SelectionHelper.MouseMove;
-            Output.MouseLeave -= SelectionHelper.MouseMove;
             Output.TextArea.SelectionChanged -= SelectionChangedHandler;
-            SelectionHelper.ClearAllSelection();
+            SelectionHelper.Deactivate();
+            tooltipHelper.Deactivate();
+            completionHelper?.Deactivate();
         }
 
         private void LoadHighlightRule(string resourceName, string ruleName) {

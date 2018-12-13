@@ -12,11 +12,16 @@ namespace Minu.Calculator {
         private static Regex functionRegex = new Regex(@"\(.*?\)\s*=");
         private CalculatorCacheSystem cacheSystem = new CalculatorCacheSystem();
 
+        public Dictionary<string, double> Variables { get; } = new Dictionary<string, double>();
+        public Dictionary<string, string> Functions { get; } = new Dictionary<string, string>();
+
         public List<string> Calculate(string rawInput)
         {
             IOutputFormatter outputFormatter = new DecFormatter();
 
             isInputOverflowed = false;
+            Variables.Clear();
+            Functions.Clear();
 
             string[] inputs = rawInput.Replace("\r", "").Split('\n');
 
@@ -51,6 +56,7 @@ namespace Minu.Calculator {
                         functions.Add(func);
                         definedToken = func.getFunctionName();
                         cacheSystem.InvalidateCache(func.getFunctionName());
+                        Functions[definedToken] = inputLine.Substring(0, inputLine.IndexOf('='));
                     }
                 }
                 else if (inputLine.Contains("="))
@@ -61,25 +67,35 @@ namespace Minu.Calculator {
                     if (cacheSystem.TryGetResult(inputLine, out var cache)) // try to get from cache first
                     {
                         arg = new Argument(cache.Name, cache.Result);
-                        lineResult = "[#] ";
+                        //lineResult = "[#] ";
                     }
                     else
                     {
                         arg = new Argument(inputLine, new Argument("ans", ans));
                         arg.addArguments(arguments.ToArray());
                         arg.addFunctions(functions.ToArray());
-                        cacheSystem.InvalidateCache(arg.getArgumentName());
-                        if (typeof(Argument).GetField("argumentExpression",
-                            BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(arg) is Expression expression)
-                            cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(),
-                                arg.getArgumentName(), arg.getArgumentValue());
-                        lineResult = "[*] ";
+
+                        var argName = arg.getArgumentName();
+                        cacheSystem.InvalidateCache(argName);
+
+                        if (argName != null) // arg.argumentExpression.initialTokens
+                            if (typeof(Argument).GetField("argumentExpression",
+                                    BindingFlags.Instance | BindingFlags.NonPublic)
+                                ?.GetValue(arg) is Expression expression)
+                                if (typeof(Expression).GetField("initialTokens",
+                                        BindingFlags.Instance | BindingFlags.NonPublic)
+                                    ?.GetValue(expression) is List<Token> tks)
+                                    cacheSystem.SetCache(inputLine, tks, argName, arg.getArgumentValue());
+                        
+                        //lineResult = "[*] ";
                     }
 
                     bool overrided = arguments.RemoveAll(a => a.getArgumentName() == arg.getArgumentName()) > 0;
                     arguments.Add(arg);
                     res = arg.getArgumentValue();
                     definedToken = arg.getArgumentName();
+                    if(definedToken!=null)
+                        Variables[definedToken] = res;
                     lineResult += outputFormatter.Format(res);
                 }
                 else if (inputLine != "")
@@ -93,12 +109,12 @@ namespace Minu.Calculator {
                         result = expression.calculate();
                         if(!double.IsNaN(result))
                             cacheSystem.SetCache(inputLine, expression.getCopyOfInitialTokens(), null, result);
-                        lineResult = "[*] ";
+                        //lineResult = "[*] ";
                     }
                     else
                     {
                         result = cache.Result;
-                        lineResult = "[#] ";
+                        //lineResult = "[#] ";
                     }
 
                     if (!double.IsNaN(result))

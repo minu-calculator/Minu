@@ -11,6 +11,9 @@
     <Setting Name="always_on_top" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="mac_style" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="font_size" Type="System.String" Scope="User">
       <Value Profile="(Default)">16</Value>
     </Setting>

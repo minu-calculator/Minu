@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Minu.Properties;
 
 namespace Minu
 {
@@ -22,7 +23,7 @@ namespace Minu
     }
     class DecFormatter : IOutputFormatter {
         public string Format(double input) {
-            return input.ToString("G");
+            return input.ToString("G"+Settings.Default.precision);
         }
     }
     class HexFormatter : IOutputFormatter {
